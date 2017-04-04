@@ -1,5 +1,5 @@
 import chai from 'chai'
-import StudentModel from '../../models/StudentModel'
+import StudentModel from '../../src/models/StudentModel'
 
 chai.should()
 let expect = chai.expect
