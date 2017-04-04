@@ -57,7 +57,6 @@ export default class BaseModel {
     not the updated objects
   */
   deleteById(){
-    console.log(this.data._id)
     return this.model.findByIdAndRemove(this.data._id)
   }
 

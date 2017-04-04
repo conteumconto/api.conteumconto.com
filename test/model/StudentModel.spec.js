@@ -1,5 +1,4 @@
 import chai from 'chai'
-import http from 'http'
 import StudentModel from '../../models/StudentModel'
 
 chai.should()
