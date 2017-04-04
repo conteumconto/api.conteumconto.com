@@ -9,12 +9,13 @@ import bodyParser from 'body-parser'
 /*
   Database Import
 */
-import Database from './database/Database'
+import Database from './src/database/Database'
 /*
   Endpoints
 */
-import studentRouter from './routes/Student'
-import bookRouter from './routes/Book'
+import student from './src/routes/Student.Router'
+import book from './src/routes/Book.Router'
+import chapter from './src/routes/Chapter.Router'
 
 
 let app = express()
@@ -32,8 +33,9 @@ const conn = new Database('local')
 /*
   routes to student resource
 */
-app.use('/student', studentRouter)
-app.use('/book', bookRouter)
+app.use('/student', student)
+app.use('/book', book)
+app.use('/chapter', chapter)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

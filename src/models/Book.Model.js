@@ -1,6 +1,6 @@
 'use strict';
 import Book from './schema/Book';
-import BaseModel from './BaseModel'
+import BaseModel from './Base.Model'
 
 export default class BookModel extends BaseModel {
 

@@ -4,10 +4,6 @@ import mongoose from 'mongoose'
  * Restrictions
  */
 
-/**
- * Restrictions
- */
-
 const studentsRestriction = [{
   type: mongoose.Schema.Types.ObjectId,
   ref: 'Student',

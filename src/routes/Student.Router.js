@@ -2,7 +2,7 @@ import express from 'express'
 /*
   Import the resource controller, the code below its pretty intuitive :3
 */
-import StudentController from '../controllers/StudentController'
+import StudentController from '../controllers/Student.Controller'
 
 let router = express.Router()
 /*

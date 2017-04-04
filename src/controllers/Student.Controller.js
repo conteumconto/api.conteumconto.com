@@ -1,6 +1,6 @@
 'use strict';
-import BaseController from './BaseController'
-import StudentModel from '../models/StudentModel'
+import BaseController from './Base.Controller'
+import Student from '../models/Student.Model'
 /*
   Model operations to Student
 */
@@ -26,7 +26,7 @@ export default class StudentController extends BaseController {
       this open the possibility to bring another resources controllers(BookController, ChapterController)
       and compose one operation with them together
     */
-    super(StudentModel)
+    super(Student)
   }
 
   /*

@@ -1,6 +1,6 @@
 'use strict';
 import Student from './schema/Student';
-import BaseModel from './BaseModel'
+import BaseModel from './Base.Model'
 
 /*
   Model operations to Student

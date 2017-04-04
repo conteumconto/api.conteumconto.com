@@ -1,27 +1,27 @@
 import express from 'express'
 
-import BookController from '../controllers/BookController'
+import Chapter from '../controllers/Chapter.Controller'
 
 let router = express.Router()
 /*
   import student RESOURCE CONTROLLER 
 */
-let bk = new BookController()
+let cp = new Chapter()
 
 router.post('/', (req, res) => {
-  bk.save(req, res)
+  cp.save(req, res)
 })
 
 router.get('/:id', (req, res) => {
-  bk.getById(req, res)
+  cp.getById(req, res)
 })
  
 router.put('/:id', (req, res) => {
-  bk.updateById(req, res)
+  cp.updateById(req, res)
 })
-
+//58e3b7673c94240628b9380d
 router.delete('/:id', (req, res) => {
-  bk.removeById(req, res)
+  cp.removeById(req, res)
 })
 
 export default router
