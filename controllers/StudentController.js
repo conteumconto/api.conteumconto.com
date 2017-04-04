@@ -1,62 +1,43 @@
 'use strict';
-/*
-  Class to controll the student resource
-*/
+import BaseController from './BaseController'
 import StudentModel from '../models/StudentModel'
-
-export default class StudentController {
-
-  /*
-    Contructor recives the req,res,next methods from express router
+/*
+  Model operations to Student
+*/
+/*
+  Because this class extends to Controller we inherit from then all the basics data Operations.
+  More specifcs RESOURCES CONTROL OPERATIONS should be implemented here
+*/
+export default class StudentController extends BaseController {
+   /*
+    pass the model this class will map 
+    to our parent class (Basecontroller)
   */
-  constructor(req, res, next) {
-    this.req = req;
-    this.res = res;
-    this.next = next;
+  constructor() {
+    /*
+      Calling the constructor from the parent class
+      and pass to him all the config that him needs to work
+
+      so ... magic, your crud its done :3
+      try with another mongooseSchema, will work,
+      
+      if its dont make sense map a mongooseSchema to 
+      a resource controller just dont override the constructor method
+      this open the possibility to bring another resources controllers(BookController, ChapterController)
+      and compose one operation with them together
+    */
+    super(StudentModel)
   }
 
   /*
-    This method store a new student
-    all the logic to data validation enter here
+    Below its a exemple of specifcs RESOURCES CONTROL OPERATIONS that
+    only make sense a Student have
   */
-  save () {
-    /*
-      All methods of Models returns a promise
-    */
-    let student = new StudentModel(this.req.body).persist()
-    /*
-      So we must to resolve the database promise and 
-      send the response back
-    */
-    Promise.all([
-			student
-		]).then((data) => {
-			if(data) {
-        /*
-          Because we recive the req function on constructor method 
-          we have acess to then with `this`
-        */
-        this.res.send(data[0])
-        this.res.status(201);
-        this.res.end()
-      }
-		}).catch(err => {
-      /*
-        case any problem occurs this it's the right place to treat them
-      */
-			this.res.json(err);
-      this.res.status(400);
-      this.res.end();
-		})
-  }
 
-  /*
-    The other methods working based in the same premisses of save()
-  */
-  studentByLogin() {
+  studentByLogin(req, res) {
     
     let data = {
-      login: this.req.params.login
+      login: req.params.login
     }
 
     let student = new StudentModel(data).getByField()
@@ -65,42 +46,42 @@ export default class StudentController {
 			student
 		]).then((data) => {
 			if(data) {
-        this.res.send(data[0])
-        this.res.status(200);
-        this.res.end()
+        res.send(data[0])
+        res.status(200);
+        res.end()
       }
 		}).catch(err => {
-			this.res.json(err);
-      this.res.status(400);
-      this.res.end();
+			res.json(err);
+      res.status(400);
+      res.end();
 		})
   }
 
-  updateByLogin() {
+  updateByLogin(req, res) {
     let query = {
-      login: this.req.params.login
+      login: req.params.login
     }
 
-    let student = new StudentModel(this.req.body).updateByField(query)
+    let student = new StudentModel(req.body).updateByField(query)
 
     Promise.all([
 			student
-		]).then((data) => {
+		]).then((data) => { 
 			if(data) {
-        this.res.send(data[0])
-        this.res.status(200);
-        this.res.end()
+        res.send(data[0])
+        res.status(200);
+        res.end()
       }
 		}).catch(err => {
-			this.res.json(err);
-      this.res.status(400);
-      this.res.end();
+			res.json(err);
+      res.status(400);
+      res.end();
 		})
   }
 
-  deleteByLogin() {
+  removeByLogin(req, res) {
     let query = {
-      login: this.req.params.login
+      login: req.params.login
     }
     
     let student = new StudentModel().deleteByField(query)
@@ -109,14 +90,14 @@ export default class StudentController {
 			student
 		]).then((data) => {
 			if(data) {
-        this.res.send(data[0])
-        this.res.status(200);
-        this.res.end()
+        res.send(data[0])
+        res.status(200);
+        res.end()
       }
 		}).catch(err => {
-			this.res.json(err);
-      this.res.status(400);
-      this.res.end();
+			res.json(err);
+      res.status(400);
+      res.end();
 		})
   }
 
