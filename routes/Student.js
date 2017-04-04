@@ -5,21 +5,41 @@ import express from 'express'
 import StudentController from '../controllers/StudentController'
 
 let router = express.Router()
+/*
+  import student RESOURCE CONTROLLER 
+*/
+let st = new StudentController()
 
+
+/*
+  routing the controller object through student resource endpoints
+*/
 router.post('/', (req, res) => {
-  new StudentController(req, res).save()
+  st.save(req, res)
 })
 
-router.get('/:login', (req, res) => {
-  new StudentController(req, res).studentByLogin()
+router.get('/:id', (req, res) => {
+  st.getById(req, res)
+})
+ 
+router.put('/:id', (req, res) => {
+  st.updateById(req, res)
 })
 
-router.put('/:login', (req, res) => {
-  new StudentController(req, res).updateByLogin()
+router.delete('/:id', (req, res) => {
+  st.removeById(req, res)
 })
 
-router.delete('/:login', (req, res) => {
-  new StudentController(req, res).deleteByLogin()
+router.get('/login/:login', (req, res) => {
+   st.studentByLogin(req, res)
+})
+
+router.put('/login/:login', (req, res) => {
+  st.updateByLogin(req, res)
+})
+
+router.delete('/login/:login', (req, res) => {
+  st.removeByLogin(req, res)
 })
 
 
