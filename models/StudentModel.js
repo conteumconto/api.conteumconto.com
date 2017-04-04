@@ -11,11 +11,11 @@ import BaseModel from './BaseModel'
 */
 export default class StudentModel extends BaseModel {
   /*
-    getting the data(req.params or req.body stuff) from our controller
+    pass data(req.params or req.body stuff) to our parent class (BaseModel)
   */
   constructor(data) {
     /*
-      Calling the constructor from the father class
+      Calling the constructor from the parent class
       and pass to him all the config that him needs to work
 
       so ... magic, your crud its done :3
@@ -23,5 +23,5 @@ export default class StudentModel extends BaseModel {
     */
     super(Student, '_id', data)
   }
-
+ 
 }
