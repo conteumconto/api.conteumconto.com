@@ -14,6 +14,7 @@ import Database from './database/Database'
   Endpoints
 */
 import studentRouter from './routes/Student'
+import bookRouter from './routes/Book'
 
 
 let app = express()
@@ -32,6 +33,7 @@ const conn = new Database('local')
   routes to student resource
 */
 app.use('/student', studentRouter)
+app.use('/book', bookRouter)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
