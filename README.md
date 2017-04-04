@@ -2,6 +2,28 @@
 * * *
 
 ## Informações Gerais
+es6 + oopjs + MVC Style Classes
+Estrutura de diretórios:
+
+``` bash
+.
+|-build/ # build da api
+|
+|-controllers/ # todas as resource controllers
+|
+|-database/ # database conection classes
+|
+|-models/ # model classes para interagir com os dados
+  
+  |-schemas/ # model schemas
+
+|-routes/ # arquivos de rota
+|
+|-test/ # testes devem entrar aqui
+|
+|index.js # bootstrap da API
+```
+
 ### Processo de Desenvolvimento
 ``` bash
 # Clone o repositório git@github.com:luandryl/api.conteumconto.com.git
