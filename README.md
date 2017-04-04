@@ -8,17 +8,17 @@ Estrutura de diretórios:
 ``` bash
 .
 |-build/ # build da api
-|
-|-controllers/ # todas as resource controllers
-|
-|-database/ # database conection classes
-|
-|-models/ # model classes para interagir com os dados
-  
-  |-schemas/ # model schemas
+|-src /
+  |-controllers/ # todas as resource controllers
+  |
+  |-database/ # database conection classes
+  |
+  |-models/ # model classes para interagir com os dados
+    
+    |-schemas/ # model schemas
 
-|-routes/ # arquivos de rota
-|
+  |-routes/ # arquivos de rota
+  |
 |-test/ # testes devem entrar aqui
 |
 |index.js # bootstrap da API
