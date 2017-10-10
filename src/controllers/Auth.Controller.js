@@ -4,21 +4,22 @@ import Student from '../models/Student.Model'
 import User from './../models/User.Model'
 import config from '../config/jwt'
 import jwt from 'jsonwebtoken'
+import HashPassword from '../services/HashPassword'
 
 export default class AuthController {
 
   singup (req, res) {
     
     let data = req.body
+    data.password = HashPassword.encrypt(data.password)
 
     if (data.type === 'student') {
-
       let studentModel = new Student(data).persist()
       Promise.all([
         studentModel
       ]).then((value) => { 
-        if(data) {
-          res.json(this._generateToken(data))
+        if(value) {
+          res.json(this._generateToken(value[0]))
         }
       }).catch(err => {
         let error_msg = Array()
@@ -47,14 +48,14 @@ export default class AuthController {
     let data = {
       login: req.body.login
     }
-    let user = new User(data).getByField()
 
+    let user = new User(data).getByField()
     Promise.all([
       user
     ]).then((value) =>{
       if (value[0][0]) {
-        if (req.body.password === value[0][0].password) {
-          res.json(this._generateToken(value))
+        if (HashPassword.encrypt(req.body.password) === value[0][0].password) {
+          res.json(this._generateToken(value[0][0]))
         } else {
           res.json({
             'Error': 'Invalid Password'
@@ -72,10 +73,11 @@ export default class AuthController {
 
   _generateToken (data) {
     let tokenInfo = {
-      'email': data[0][0].email,
-      'login': data[0][0].login,
-      '_id': data[0][0]._id
+      'email': data.email,
+      'login': data.login,
+      '_id': data._id
     }
+    console.log(data)
     return {
       'acess_token': jwt.sign(tokenInfo, config.secret, {
         expiresIn: 10080, // in seconds
