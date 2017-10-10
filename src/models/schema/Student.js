@@ -1,53 +1,30 @@
 'use strict'
 import mongoose from 'mongoose'
+import User from './User'
+
 /**
  * Restrictions
  */
 
-const nameRestriction = {
-  type: String,
-  required: [true, 'No name given'],
-  minlength: [3, 'Name too short'],
-  maxlength: [100, 'Name too big'],
-}
-
-const birthDayRestriction = {
-  type: String,
-  required: [true, 'No birth day given'],
-}
+const bookRestriction = [{
+  type: mongoose.Schema.Types.ObjectId,
+  ref: 'Book',
+}];
 
 const emailRestriction = {
   type: String,
-  required: [true, 'No email given'],
-  index: [{unique: true}, 'Duplicate '],
-}
-const bookRestriction = [{
-  type: mongoose.Schema.Types.ObjectId, ref: 'Book',
-}]
-// todo: make login unique
-const loginRestriction = {
-  type: String,
-  required: [true, 'No login given'],
-  index: { unique: true },
-}
+  index: [{
+    // Unique + Sparse = If the email is not null, it has to be unique
+    unique: true,
+    sparse: true,
+  }],
+};
 
-const passwordRestriction = {
-  type: String,
-  required: [true, 'No password given'],
-}
-
-/**
- * Student Schema
- */
-
+// Inheritance of the person model
 const StudentSchema = new mongoose.Schema({
-  first_name: nameRestriction,
-  last_name: nameRestriction,
-  birth_day: birthDayRestriction,
-  email: emailRestriction,
-  login: loginRestriction,
-  password: passwordRestriction,
   books: bookRestriction,
-})
+  email: emailRestriction
+});
 
-export default mongoose.model('Student', StudentSchema)
+
+export default User.discriminator('Student', StudentSchema)
