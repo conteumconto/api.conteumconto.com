@@ -6,6 +6,8 @@ import path from 'path'
 import logger from 'morgan'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
+import passport from 'passport' 
+
 /*
   Database Import
 */
@@ -16,7 +18,13 @@ import Database from './src/database/Database'
 import student from './src/routes/Student.Router'
 import book from './src/routes/Book.Router'
 import chapter from './src/routes/Chapter.Router'
+import auth from './src/routes/Auth.Router'
+/*
+  middleware
+*/
+import protectMiddleware from './src/middleware/passport'
 
+protectMiddleware(passport)
 
 let app = express()
 
@@ -36,6 +44,7 @@ const conn = new Database('local')
 app.use('/student', student)
 app.use('/book', book)
 app.use('/chapter', chapter)
+app.use('/auth', auth)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
