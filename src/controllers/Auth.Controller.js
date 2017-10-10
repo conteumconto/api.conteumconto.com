@@ -76,7 +76,6 @@ export default class AuthController {
       'login': data[0][0].login,
       '_id': data[0][0]._id
     }
-    console.log(tokenInfo)
     return {
       'acess_token': jwt.sign(tokenInfo, config.secret, {
         expiresIn: 10080, // in seconds
