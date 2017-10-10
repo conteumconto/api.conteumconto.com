@@ -1,6 +1,12 @@
 import express from 'express'
+import passport from 'passport' 
 
 import Chapter from '../controllers/Chapter.Controller'
+
+
+const protect = passport.authenticate('jwt', {
+  session: false,
+});
 
 let router = express.Router()
 /*
@@ -8,19 +14,25 @@ let router = express.Router()
 */
 let cp = new Chapter()
 
-router.post('/', (req, res) => {
+router.get('/', protect, (req, res) => {
+    res.json({
+      'msg': 'Welcome to chapter endpoints' 
+    })
+}) 
+
+router.post('/', protect, (req, res) => {
   cp.save(req, res)
 })
 
-router.get('/:id', (req, res) => {
+router.get('/:id', protect, (req, res) => {
   cp.getById(req, res)
 })
  
-router.put('/:id', (req, res) => {
+router.put('/:id', protect, (req, res) => {
   cp.updateById(req, res)
 })
-//58e3b7673c94240628b9380d
-router.delete('/:id', (req, res) => {
+
+router.delete('/:id', protect, (req, res) => {
   cp.removeById(req, res)
 })
 
