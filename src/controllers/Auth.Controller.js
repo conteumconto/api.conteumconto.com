@@ -1,6 +1,8 @@
 'use strict';
 import BaseController from './Base.Controller'
 import Student from '../models/Student.Model'
+import Teacher from '../models/Teacher.Model'
+
 import User from './../models/User.Model'
 import config from '../config/jwt'
 import jwt from 'jsonwebtoken'
@@ -39,7 +41,32 @@ export default class AuthController {
         res.status(400);
       })
     } else if (data.type === 'teacher') {
-      //todo
+
+      let teacherModel = new Teacher(data).persist()
+      Promise.all([
+        teacherModel
+      ]).then((value) => { 
+        if(value) {
+          res.json(this._generateToken(value[0]))
+        }
+      }).catch(err => {
+        let error_msg = Array()
+        if (err.code == 11000) {
+          if (err.errmsg.match(/email_1/)) {
+            error_msg.push({
+              error: 'Duplicate email',
+            })
+          } 
+          if (err.errmsg.match(/login_1/)) {
+            error_msg.push({
+              error: 'Duplicate login',
+            })
+          }
+        }
+        res.json(error_msg);
+        res.status(400);
+      })
+
     }
 
   }
@@ -63,7 +90,7 @@ export default class AuthController {
         }
       } else {
         res.json({
-          'Error': 'Invalid Mail'
+          'Error': 'Invalid Login'
         })
       }
     }).catch(err => {
@@ -77,7 +104,6 @@ export default class AuthController {
       'login': data.login,
       '_id': data._id
     }
-    console.log(data)
     return {
       'acess_token': jwt.sign(tokenInfo, config.secret, {
         expiresIn: 10080, // in seconds
