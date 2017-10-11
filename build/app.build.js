@@ -872,7 +872,8 @@ class Database {
   }
 
   static _production () {
-    console.log('heloow')
+    console.log('asdasdasd')
+    
     let connection
     return connection = __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.connect(process.env.MONGODB_URI)
       .then(() => {
@@ -883,6 +884,7 @@ class Database {
   }
 
   static _local () {
+    console.log('hellor')
     let connection
     const localURI = 'mongodb://' + __WEBPACK_IMPORTED_MODULE_1__config_database__["a" /* default */].dev.local.host + ':' + 
                       __WEBPACK_IMPORTED_MODULE_1__config_database__["a" /* default */].dev.local.port + '/' +__WEBPACK_IMPORTED_MODULE_1__config_database__["a" /* default */].dev.local.database

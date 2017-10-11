@@ -20,6 +20,7 @@ export default class Database {
   }
 
   static _local () {
+    console.log('hellor')
     let connection
     const localURI = 'mongodb://' + config.dev.local.host + ':' + 
                       config.dev.local.port + '/' +config.dev.local.database
