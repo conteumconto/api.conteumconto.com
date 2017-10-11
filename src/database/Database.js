@@ -10,9 +10,9 @@ export default class Database {
   }
 
   static _production () {
-    console.log(process.env.MONGODB_URI)
+    console.log('mongodb://heroku_z1rp5mnh:9idkpr8q4q5ef78nifns2p1259@ds117615.mlab.com:17615/heroku_z1rp5mnh')
     let connection
-    return connection = mongoose.createConnection(process.env.MONGODB_URI, {
+    return connection = mongoose.createConnection('mongodb://heroku_z1rp5mnh:9idkpr8q4q5ef78nifns2p1259@ds117615.mlab.com:17615/heroku_z1rp5mnh', {
       useMongoClient: true,
     }).then(() => {
         console.log('Database connected successfully')
