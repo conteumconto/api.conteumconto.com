@@ -11,8 +11,9 @@ export default class Database {
 
   static _production () {
     let connection
-    return connection = mongoose.connect(process.env.MONGODB_URI)
-      .then(() => {
+    return connection = mongoose.createConnection(process.env.MONGODB_URI, {
+      useMongoClient: true,
+    }).then(() => {
         console.log('Database connected successfully')
       }).catch((err) => {
         console.error(err)
@@ -20,13 +21,13 @@ export default class Database {
   }
 
   static _local () {
-    console.log('hellor')
     let connection
     const localURI = 'mongodb://' + config.dev.local.host + ':' + 
                       config.dev.local.port + '/' +config.dev.local.database
                       
-    return connection = mongoose.connect(localURI)
-      .then(() => {
+    return connection = mongoose.createConnection(localURI, {
+      useMongoClient: true,
+    }).then(() => {
         return true
       }).catch((err) => {
         console.error(err)
