@@ -22,6 +22,7 @@ export default class AuthController {
       ]).then((value) => { 
         if(value) {
           res.json(this._generateToken(value[0]))
+          res.status(200);
         }
       }).catch(err => {
         let error_msg = Array()
