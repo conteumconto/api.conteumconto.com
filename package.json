@@ -7,7 +7,7 @@
     "start": "node ./build/app.build.js",
     "build": "webpack",
     "test": "mocha --compilers js:babel-core/register",
-    "dev": "nodemon index.js --exec babel-node"
+    "dev": "DEV=True nodemon index.js --exec babel-node"
   },
   "author": "",
   "license": "ISC",
