@@ -35,7 +35,6 @@ export default class BaseController {
       and before resolve we send the response to the client
   */
   save (req, res) {
-
     let modelPromise = new this.model(req.body).persist()
     
     Promise.all([
@@ -63,7 +62,7 @@ export default class BaseController {
 			modelPromise
 		]).then((data) => {
 			if(data) {
-        res.send(data[0])
+        res.send(data[0][0])
         res.status(200);
         res.end()
       }
@@ -73,8 +72,7 @@ export default class BaseController {
   }
 
   updateById (req, res) {
-		
-    let modelPromise = this.model(req.body).updateById()
+    let modelPromise = new this.model(req.body).updateById()
 
 		Promise.all([
 			modelPromise
@@ -96,8 +94,8 @@ export default class BaseController {
     let data = {
 			_id: req.params.id
   	}	
-		
-    let modelPromise = this.model(data).deleteById()
+		console.log(this.model)
+    let modelPromise = new this.model(data).deleteById()
 
 		Promise.all([
 			modelPromise
