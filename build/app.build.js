@@ -872,8 +872,9 @@ class Database {
   }
 
   static _production () {
+    console.log('oalr')
     let connection
-    return connection = __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.createConnection(process.env.MONGODB_URI, {
+    return connection = __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.createConnection('mongodb://heroku_z1rp5mnh:9idkpr8q4q5ef78nifns2p1259@ds117615.mlab.com:17615/heroku_z1rp5mnh', {
       useMongoClient: true,
     }).then(() => {
         console.log('Database connected successfully')
