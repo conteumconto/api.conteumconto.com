@@ -1,14 +1,15 @@
 'use strict'
 import mongoose from 'mongoose'
+import config from '../config/database'
 
 export default class Database {
 
-  constructor (env) {
+  static init () {
     mongoose.Promise = global.Promise
-    return env === 'production' ? this.production(): this.local();
+    return process.env.DEV ? this._local(): this._production();
   }
 
-  production () {
+  static _production () {
     let connection
     return connection = mongoose.connect(process.env.MONGODB_URI)
       .then(() => {
@@ -18,10 +19,11 @@ export default class Database {
       })
   }
 
-  local () {
+  static _local () {
     let connection
-    const localURI = 'mongodb://localhost:27017/conte-um-conto'
-    
+    const localURI = 'mongodb://' + config.dev.local.host + ':' + 
+                      config.dev.local.port + '/' +config.dev.local.database
+                      
     return connection = mongoose.connect(localURI)
       .then(() => {
         return true
