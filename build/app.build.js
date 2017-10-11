@@ -872,7 +872,7 @@ class Database {
   }
 
   static _production () {
-    console.log('oalr')
+    console.log(process.env.MONGODB_URI)
     let connection
     return connection = __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.createConnection(process.env.MONGODB_URI, {
       useMongoClient: true,

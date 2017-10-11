@@ -10,7 +10,7 @@ export default class Database {
   }
 
   static _production () {
-    console.log('oalr')
+    console.log(process.env.MONGODB_URI)
     let connection
     return connection = mongoose.createConnection(process.env.MONGODB_URI, {
       useMongoClient: true,
