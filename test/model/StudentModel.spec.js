@@ -1,5 +1,5 @@
 import chai from 'chai'
-import StudentModel from '../../src/models/StudentModel'
+import StudentModel from '../../src/models/Student.Model'
 
 chai.should()
 let expect = chai.expect
@@ -12,8 +12,8 @@ describe('Student Model Test Basic API', () => {
 				first_name: 'eita@eita.com',
 				last_name: 'eita@eita.com',
 				birth_day: '12',
-				email: 'eita@eita.com',
-				login: 'eita@eita.com',
+				email: 'eita1@eita.com',
+				login: 'eita1@eita.com',
 				password: 'eita@eita.com'
 		});
 
@@ -81,8 +81,10 @@ describe('Student Model Test Basic API', () => {
 		Promise.all([
 			student
 		]).then((data) => {
-			if(data) done()
-			done()
+			if(data){
+				done()
+			}
+			
 		}).catch(err => {
 			console.log(err)
 		})
