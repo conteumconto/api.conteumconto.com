@@ -18,12 +18,12 @@ import Database from './src/database/Database'
 import student from './src/routes/Student.Router'
 import book from './src/routes/Book.Router'
 import chapter from './src/routes/Chapter.Router'
+import cls from './src/routes/Class.Router'
 import auth from './src/routes/Auth.Router'
 /*
   middleware
 */
 import protectMiddleware from './src/middleware/passport'
-
 protectMiddleware(passport)
 
 let app = express()
@@ -44,6 +44,7 @@ const conn = new Database('local')
 app.use('/student', student)
 app.use('/book', book)
 app.use('/chapter', chapter)
+app.use('/class', cls)
 app.use('/auth', auth)
 
 // catch 404 and forward to error handler
