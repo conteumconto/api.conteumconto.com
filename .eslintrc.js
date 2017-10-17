@@ -11,7 +11,9 @@ module.exports = {
     // allow paren-less arrow functions
     'arrow-parens': 0,
     // allow async-await
-    'generator-star-spacing': 0
+    'generator-star-spacing': 0,
+    "indent": [2, "tab"],
+    "no-tabs": 0
   },
   env: {
     browser: 0
