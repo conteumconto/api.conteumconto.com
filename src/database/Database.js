@@ -9,7 +9,7 @@ export default class Database {
 	}
 
 	_production () {
-		return mongoose.connect(process.env.MONGODB_URI).then(() => {
+		return mongoose.connect('mongodb://heroku_z1rp5mnh:9idkpr8q4q5ef78nifns2p1259@ds117615.mlab.com:17615/heroku_z1rp5mnh').then(() => {
 			console.log('[Prod] -> Database conected')
 			return true
 		}).catch((err) => {
