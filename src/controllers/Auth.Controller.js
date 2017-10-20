@@ -21,7 +21,6 @@ export default class AuthController {
 				} else {
 					res.send(500)
 				}
-
 			}).catch(err => {
 				console.log(err)
 				let errorMsg = []
@@ -74,7 +73,7 @@ export default class AuthController {
 		let data = {
 			login: req.body.login
 		}
-
+		console.log(data)
 		let user = new User(data).getByField()
 		Promise.all([
 			user
