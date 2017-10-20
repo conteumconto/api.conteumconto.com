@@ -5,7 +5,7 @@ import config from '../config/database'
 export default class Database {
 	init () {
 		mongoose.Promise = global.Promise
-		return process.env.MONGODB_URI ? this._production() : this._local()
+		return process.env.DEV === 'True' ? this._local() : this._production()
 	}
 
 	_production () {

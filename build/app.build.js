@@ -863,7 +863,7 @@ var substr = 'ab'.substr(-1) === 'b'
 class Database {
 	init () {
 		__WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.Promise = global.Promise
-		return process.env.MONGODB_URI ? this._production() : this._local()
+		return process.env.DEV === 'True' ? this._local() : this._production()
 	}
 
 	_production () {
