@@ -94,82 +94,82 @@ module.exports = require("passport");
 
 
 /*
-  Base model Operations
+	Base model Operations
 */
 class BaseModel {
-  /*
-    The constructor recives 
-    @model => mongoose Schema
-    @key   => string of index key on mongooseSchema
-    @data  => transitional data object {
-      the purpose of this attribute its to be a two way data bind between the requisition object 
-      that we could store in mongodb and result of query in data stored on mongoDB  
-    }
-  */
-  constructor(model, key, data) {
-    __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.Promise = Promise;
-    this.model = model;
-    this.key = key;
-    this.data = data;
-  }
+	/*
+		The constructor recives
+		@model => mongoose Schema
+		@key   => string of index key on mongooseSchema
+		@data  => transitional data object {
+			the purpose of this attribute its to be a two way data bind between the requisition object
+			that we could store in mongodb and result of query in data stored on mongoDB
+		}
+	*/
+	constructor (Model, key, data) {
+		__WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.Promise = Promise
+		this.Model = Model
+		this.key = key
+		this.data = data
+	}
 
-  /*
-    Basics crud -> ID bases
-  */
+	/*
+		Basics crud -> ID bases
+	*/
 
-  /*
-    All the methods working in the same way -> 
-      return a promise from the action that we try 
-      to make
-  */
-  /*
-    eg: persist()
-      this.data  === req.body -> object that we want to store
-      this.model === StudentSchema, BookSchema, anyStuffSchema ...
+	/*
+		All the methods working in the same way ->
+			return a promise from the action that we try
+			to make
+	*/
+	/*
+		eg: persist()
+			this.data  === req.body -> object that we want to store
+			this.Model === StudentSchema, BookSchema, anyStuffSchema ...
 
-      so we return a promise to who calls the persist method and who 
-      calls(that is who that actually intend to save data) 
-      must have to resolve this `create` promise
+			so we return a promise to who calls the persist method and who
+			calls(that is who that actually intend to save data)
+			must have to resolve this `create` promise
 
-  */
-  persist () {
-    let modelObj = new this.model(this.data);
-    return this.model.create(modelObj)
-  }
+	*/
+	persist () {
+		let modelObj = new this.Model(this.data)
+		return this.Model.create(modelObj)
+	}
 
-  getById () {
-    return this.model.find({_id: this.data._id}).exec()
-  }
+	getById () {
+		return this.Model.find({_id: this.data._id}).exec()
+	}
 
-  updateById () {
-    return this.model.findByIdAndUpdate(this.data._id, this.data)
-  }
+	updateById () {
+		return this.Model.findByIdAndUpdate(this.data._id, this.data)
+	}
 
-  /*
-    this its return the number of rows afecteds by the data update,
-    not the updated objects
-  */
-  deleteById(){
-    return this.model.findByIdAndRemove(this.data._id)
-  }
+	/*
+		this its return the number of rows afecteds by the data update,
+		not the updated objects
+	*/
+	deleteById () {
+		return this.Model.findByIdAndRemove(this.data._id)
+	}
 
-  /*
-    advanced API -> Simple query on modelObjects coverage
-  */
-  getByField () {
-    return this.model.find(this.data).exec()
-  }
+	/*
+		advanced API -> Simple query on modelObjects coverage
+	*/
+	getByField () {
+		return this.Model.find(this.data).exec()
+	}
 
-  deleteByField (query) {
-    return this.model.findOneAndRemove(query).exec()
-  }
+	deleteByField (query) {
+		return this.Model.findOneAndRemove(query).exec()
+	}
 
-  updateByField (query) {
-    return this.model.update(query, this.data)
-  }
-
+	updateByField (query) {
+		return this.Model.update(query, this.data)
+	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = BaseModel;
+
 
 
 /***/ }),
@@ -179,121 +179,119 @@ class BaseModel {
 "use strict";
 
 /*
-  Base Controller Operations
+	Base Controller Operations
 */
 class BaseController {
-  /*
-    The Constructor recives
-    @model => mongoose Schema {
-      sharing model context with the parent class
-    }
-  */
-  constructor (model) {
-    this.model = model
-  }
+	/*
+		The Constructor recives
+		@model => mongoose Schema {
+			sharing model context with the parent class
+		}
+	*/
+	constructor (Model) {
+		this.Model = Model
+	}
 
-  /*
-    recives
-    @req => express.Router() req context
-    @req => express.Router() res context
-  */
-  /*
-    Basics crud -> ID bases
-  */
+	/*
+		recives
+		@req => express.Router() req context
+		@req => express.Router() res context
+	*/
+	/*
+		Basics crud -> ID bases
+	*/
 
-  /*
-    All the methods working in the same way -> 
-      resolve a promise given by mongoDB call
-  */
-  /*
-    eg: save()
-      req -> express.Router() context
-      res -> express.Router() context
+	/*
+		All the methods working in the same way ->
+			resolve a promise given by mongoDB call
+	*/
+	/*
+		eg: save()
+			req -> express.Router() context
+			res -> express.Router() context
 
-      so we resolve a promise call to any model (the model this is given by our child class)
-      and before resolve we send the response to the client
-  */
-  save (req, res) {
-    let modelPromise = new this.model(req.body).persist()
-    
-    Promise.all([
-			modelPromise
-		]).then((data) => {
-			if(data) {
-        res.send(data[0])
-        res.status(201);
-        res.end()
-      }
-		}).catch(err => {
-			res.json(err);
-      res.status(400);
-      res.end();
-		})
-  }
+			so we resolve a promise call to any model (the model this is given by our child class)
+			and before resolve we send the response to the client
+	*/
+	save (req, res) {
+		let modelPromise = new this.Model(req.body).persist()
 
-  getById (req, res) {
-    let modelPromise = new 
-		this.model({
-			_id: req.params.id
-		}).getById();
-		
 		Promise.all([
 			modelPromise
 		]).then((data) => {
-			if(data) {
-        res.send(data[0][0])
-        res.status(200);
-        res.end()
-      }
+			if (data) {
+				res.send(data[0])
+				res.status(201)
+				res.end()
+			}
+		}).catch(err => {
+			res.json(err)
+			res.status(400)
+			res.end()
+		})
+	}
+
+	getById (req, res) {
+		let modelPromise = new
+			this.Model({
+				_id: req.params.id
+			}).getById()
+
+		Promise.all([
+			modelPromise
+		]).then((data) => {
+			if (data) {
+				res.send(data[0][0])
+				res.status(200)
+				res.end()
+			}
 		}).catch(err => {
 			console.log(err)
 		})
-  }
+	}
 
-  updateById (req, res) {
-    let modelPromise = new this.model(req.body).updateById()
+	updateById (req, res) {
+		let modelPromise = new this.Model(req.body).updateById()
 
 		Promise.all([
 			modelPromise
 		]).then((data) => {
-			if(data) {
-        res.send(data[0])
-        res.status(200);
-        res.end()
-      }
+			if (data) {
+				res.send(data[0])
+				res.status(200)
+				res.end()
+			}
 		}).catch(err => {
-			res.json(err);
-      res.status(400);
-      res.end();
+			res.json(err)
+			res.status(400)
+			res.end()
 		})
-  }
+	}
 
-  removeById (req, res) {
-
-    let data = {
+	removeById (req, res) {
+		let data = {
 			_id: req.params.id
-  	}	
-		console.log(this.model)
-    let modelPromise = new this.model(data).deleteById()
+		}
+
+		let modelPromise = new this.Model(data).deleteById()
 
 		Promise.all([
 			modelPromise
 		]).then((data) => {
-			if(data) {
-        res.send(data[0])
-        res.status(200);
-        res.end()
-      }
+			if (data) {
+				res.send(data[0])
+				res.status(200)
+				res.end()
+			}
 		}).catch(err => {
-			res.json(err);
-      res.status(400);
-      res.end();
+			res.json(err)
+			res.status(400)
+			res.end()
 		})
-
-  }
-
+	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = BaseController;
+
 
 
 /***/ }),
@@ -552,36 +550,35 @@ process.umask = function() { return 0; };
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__schema_Student__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__schemes_Student__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Base_Model__ = __webpack_require__(3);
 
 
 
-
 /*
-  Model operations to Student
+	Model operations to Student
 */
 /*
-  Because this class extends to BaseModel we inherit from then all the basics data Operations.
-  More specifcs data operetions should be implemented here
+	Because this class extends to BaseModel we inherit from then all the basics data Operations.
+	More specifcs data operetions should be implemented here
 */
 class StudentModel extends __WEBPACK_IMPORTED_MODULE_1__Base_Model__["a" /* default */] {
-  /*
-    pass data(req.params or req.body stuff) to our parent class (BaseModel)
-  */
-  constructor(data) {
-    /*
-      Calling the constructor from the parent class
-      and pass to him all the config that him needs to work
+	/*
+		pass data(req.params or req.body stuff) to our parent class (BaseModel)
+	*/
+	constructor (data) {
+		/*
+			Calling the constructor from the parent class
+			and pass to him all the config that him needs to work
 
-      so ... magic, your crud its done :3
-      try with another mongooseSchema, will work 
-    */
-    super(__WEBPACK_IMPORTED_MODULE_0__schema_Student__["a" /* default */], '_id', data)
-  }
- 
+			so ... magic, your crud its done :3
+			try with another mongooseSchema, will work
+		*/
+		super(__WEBPACK_IMPORTED_MODULE_0__schemes_Student__["a" /* default */], '_id', data)
+	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = StudentModel;
+
 
 
 /***/ }),
@@ -589,36 +586,35 @@ class StudentModel extends __WEBPACK_IMPORTED_MODULE_1__Base_Model__["a" /* defa
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__schema_User__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__schemes_User__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Base_Model__ = __webpack_require__(3);
 
 
 
-
 /*
-  Model operations to Student
+	Model operations to Student
 */
 /*
-  Because this class extends to BaseModel we inherit from then all the basics data Operations.
-  More specifcs data operetions should be implemented here
+	Because this class extends to BaseModel we inherit from then all the basics data Operations.
+	More specifcs data operetions should be implemented here
 */
 class UserModel extends __WEBPACK_IMPORTED_MODULE_1__Base_Model__["a" /* default */] {
-  /*
-    pass data(req.params or req.body stuff) to our parent class (BaseModel)
-  */
-  constructor(data) {
-    /*
-      Calling the constructor from the parent class
-      and pass to him all the config that him needs to work
+	/*
+		pass data(req.params or req.body stuff) to our parent class (BaseModel)
+	*/
+	constructor (data) {
+		/*
+			Calling the constructor from the parent class
+			and pass to him all the config that him needs to work
 
-      so ... magic, your crud its done :3
-      try with another mongooseSchema, will work 
-    */
-    super(__WEBPACK_IMPORTED_MODULE_0__schema_User__["a" /* default */], '_id', data)
-  }
- 
+			so ... magic, your crud its done :3
+			try with another mongooseSchema, will work
+		*/
+		super(__WEBPACK_IMPORTED_MODULE_0__schemes_User__["a" /* default */], '_id', data)
+	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = UserModel;
+
 
 
 /***/ }),
@@ -865,40 +861,34 @@ var substr = 'ab'.substr(-1) === 'b'
 
 
 class Database {
+	init () {
+		__WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.Promise = global.Promise
+		return process.env.DEV ? this._local() : this._production()
+	}
 
-  static init () {
-    __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.Promise = global.Promise
-    return process.env.DEV ? this._local(): this._production();
-  }
+	_production () {
+		return __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.connect(process.env.MONGODB_URI).then(() => {
+			console.log('Database connected successfully')
+			return true
+		}).catch((err) => {
+			console.error(err)
+		})
+	}
 
-  static _production () {
-    console.log('mongodb://heroku_z1rp5mnh:9idkpr8q4q5ef78nifns2p1259@ds117615.mlab.com:17615/heroku_z1rp5mnh')
-    let connection
-    return connection = __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.createConnection('mongodb://heroku_z1rp5mnh:9idkpr8q4q5ef78nifns2p1259@ds117615.mlab.com:17615/heroku_z1rp5mnh', {
-      useMongoClient: true,
-    }).then(() => {
-        console.log('Database connected successfully')
-      }).catch((err) => {
-        console.error(err)
-      })
-  }
+	_local () {
+		const localURI = 'mongodb://' + __WEBPACK_IMPORTED_MODULE_1__config_database__["a" /* default */].dev.local.host + ':' +
+											__WEBPACK_IMPORTED_MODULE_1__config_database__["a" /* default */].dev.local.port + '/' + __WEBPACK_IMPORTED_MODULE_1__config_database__["a" /* default */].dev.local.database
 
-  static _local () {
-    let connection
-    const localURI = 'mongodb://' + __WEBPACK_IMPORTED_MODULE_1__config_database__["a" /* default */].dev.local.host + ':' + 
-                      __WEBPACK_IMPORTED_MODULE_1__config_database__["a" /* default */].dev.local.port + '/' +__WEBPACK_IMPORTED_MODULE_1__config_database__["a" /* default */].dev.local.database
-                      
-    return connection = __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.createConnection(localURI, {
-      useMongoClient: true,
-    }).then(() => {
-        return true
-      }).catch((err) => {
-        console.error(err)
-      })
-  }
-
+		return __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.connect(localURI).then(() => {
+			console.log('Database connected successfully')
+			return true
+		}).catch((err) => {
+			console.error(err)
+		})
+	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Database;
+
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(25), __webpack_require__(6)))
 
@@ -919,39 +909,37 @@ class Database {
 
 
 /* harmony default export */ __webpack_exports__["a"] = (function (passport) {
-  let JwtStrategy = __WEBPACK_IMPORTED_MODULE_3_passport_jwt___default.a.Strategy
-  let ExtractJwt = __WEBPACK_IMPORTED_MODULE_3_passport_jwt___default.a.ExtractJwt
+	let JwtStrategy = __WEBPACK_IMPORTED_MODULE_3_passport_jwt___default.a.Strategy
+	let ExtractJwt = __WEBPACK_IMPORTED_MODULE_3_passport_jwt___default.a.ExtractJwt
 
-  let opts = {
-    'jwtFromRequest': ExtractJwt.fromAuthHeaderAsBearerToken(),
-    'secretOrKey': __WEBPACK_IMPORTED_MODULE_2__config_jwt__["a" /* default */].secret
-  };
-  
-  passport.use(new JwtStrategy(opts, (payload, done) => {
-    
-    let query = {
-      _id: payload._id
-    }
-    
-    let user = new __WEBPACK_IMPORTED_MODULE_1__models_User_Model__["a" /* default */](query).getById()
+	let opts = {
+		'jwtFromRequest': ExtractJwt.fromAuthHeaderAsBearerToken(),
+		'secretOrKey': __WEBPACK_IMPORTED_MODULE_2__config_jwt__["a" /* default */].secret
+	}
 
-    Promise.all([
-      user
-    ]).then(data => {
-      if (data) {
-        done(null, payload);
-      } else {
-        done(null, false);
-      }
-    }).catch(err => {
-      if (err) {
-        return done(err, false);
-      }
-    })
+	__WEBPACK_IMPORTED_MODULE_0_passport___default.a.use(new JwtStrategy(opts, (payload, done) => {
+		let query = {
+			_id: payload._id
+		}
 
-  }))
+		let user = new __WEBPACK_IMPORTED_MODULE_1__models_User_Model__["a" /* default */](query).getById()
 
-});;
+		Promise.all([
+			user
+		]).then(data => {
+			if (data) {
+				done(null, payload)
+			} else {
+				done(null, false)
+			}
+		}).catch(err => {
+			if (err) {
+				return done(err, false)
+			}
+		})
+	}))
+});
+
 
 /***/ }),
 /* 13 */
@@ -963,32 +951,29 @@ class Database {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__controllers_Auth_Controller__ = __webpack_require__(28);
 
 /*
-  Import the resource controller, the code below its pretty intuitive :3
+	Import the resource controller, the code below its pretty intuitive :3
 */
 
 
 let router = __WEBPACK_IMPORTED_MODULE_0_express___default.a.Router()
 /*
-  import student RESOURCE CONTROLLER 
+	import student RESOURCE CONTROLLER 
 */
 let auth = new __WEBPACK_IMPORTED_MODULE_1__controllers_Auth_Controller__["a" /* default */]()
-
-
 /*
-  routing the controller object through student resource endpoints
+	routing the controller object through student resource endpoints
 */
 
 router.post('/login', (req, res) => {
-  auth.login(req, res)
+	auth.login(req, res)
 })
 
 router.post('/singup', (req, res) => {
-  auth.singup(req, res)
+	auth.singup(req, res)
 })
 
-
-
 /* harmony default export */ __webpack_exports__["a"] = (router);
+
 
 /***/ }),
 /* 14 */
@@ -1001,42 +986,43 @@ router.post('/singup', (req, res) => {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_passport___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_passport__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__controllers_Book_Controller__ = __webpack_require__(29);
 
- 
+
 
 
 const protect = __WEBPACK_IMPORTED_MODULE_1_passport___default.a.authenticate('jwt', {
-  session: false,
-});
+	session: false
+})
 
 let router = __WEBPACK_IMPORTED_MODULE_0_express___default.a.Router()
 /*
-  import student RESOURCE CONTROLLER 
+	import student RESOURCE CONTROLLER
 */
 let bk = new __WEBPACK_IMPORTED_MODULE_2__controllers_Book_Controller__["a" /* default */]()
 
 router.get('/', protect, (req, res) => {
-  res.json({
-    'msg': 'Welcome to Book endpoints' 
-  })
-}) 
+	res.json({
+		'msg': 'Welcome to Book endpoints'
+	})
+})
 
 router.post('/', protect, (req, res) => {
-  bk.save(req, res)
+	bk.save(req, res)
 })
 
 router.get('/:id', protect, (req, res) => {
-  bk.getById(req, res)
+	bk.getById(req, res)
 })
- 
+
 router.put('/:id', protect, (req, res) => {
-  bk.updateById(req, res)
+	bk.updateById(req, res)
 })
 
 router.delete('/:id', protect, (req, res) => {
-  bk.removeById(req, res)
+	bk.removeById(req, res)
 })
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
+
 
 /***/ }),
 /* 15 */
@@ -1049,44 +1035,44 @@ router.delete('/:id', protect, (req, res) => {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_passport___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_passport__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__controllers_Chapter_Controller__ = __webpack_require__(30);
 
- 
 
 
 
 
 const protect = __WEBPACK_IMPORTED_MODULE_1_passport___default.a.authenticate('jwt', {
-  session: false,
-});
+	session: false
+})
 
 let router = __WEBPACK_IMPORTED_MODULE_0_express___default.a.Router()
 /*
-  import student RESOURCE CONTROLLER 
+	import student RESOURCE CONTROLLER
 */
 let cp = new __WEBPACK_IMPORTED_MODULE_2__controllers_Chapter_Controller__["a" /* default */]()
 
 router.get('/', protect, (req, res) => {
-    res.json({
-      'msg': 'Welcome to chapter endpoints' 
-    })
-}) 
+	res.json({
+		'msg': 'Welcome to chapter endpoints'
+	})
+})
 
 router.post('/', protect, (req, res) => {
-  cp.save(req, res)
+	cp.save(req, res)
 })
 
 router.get('/:id', protect, (req, res) => {
-  cp.getById(req, res)
+	cp.getById(req, res)
 })
- 
+
 router.put('/:id', protect, (req, res) => {
-  cp.updateById(req, res)
+	cp.updateById(req, res)
 })
 
 router.delete('/:id', protect, (req, res) => {
-  cp.removeById(req, res)
+	cp.removeById(req, res)
 })
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
+
 
 /***/ }),
 /* 16 */
@@ -1099,52 +1085,47 @@ router.delete('/:id', protect, (req, res) => {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_passport___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_passport__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__controllers_Class_Controller__ = __webpack_require__(31);
 
- 
 
 
 
 
 const protect = __WEBPACK_IMPORTED_MODULE_1_passport___default.a.authenticate('jwt', {
-  session: false,
-});
+	session: false
+})
 
 let router = __WEBPACK_IMPORTED_MODULE_0_express___default.a.Router()
 /*
-  import student RESOURCE CONTROLLER 
+	import student RESOURCE CONTROLLER
 */
 let cl = new __WEBPACK_IMPORTED_MODULE_2__controllers_Class_Controller__["a" /* default */]()
 
 router.get('/', protect, (req, res) => {
-    res.json({
-      'msg': 'Welcome to class endpoints' 
-    })
-}) 
+	res.json({
+		'msg': 'Welcome to class endpoints'
+	})
+})
 
 router.post('/', protect, (req, res) => {
-  cl.save(req, res)
+	cl.save(req, res)
 })
 
 router.get('/:id', protect, (req, res) => {
-  cl.getById(req, res)
+	cl.getById(req, res)
 })
- 
+
 router.put('/:id', protect, (req, res) => {
-  cl.updateById(req, res)
+	cl.updateById(req, res)
 })
 
 router.delete('/:id', protect, (req, res) => {
-  cl.removeById(req, res)
+	cl.removeById(req, res)
 })
-
-
 
 router.get('/teacher/:teacher_id', protect, (req, res) => {
-  cl.teacherClasses(req, res)
+	cl.teacherClasses(req, res)
 })
 
-
 /* harmony default export */ __webpack_exports__["a"] = (router);
-
 
 
 /***/ }),
@@ -1158,60 +1139,58 @@ router.get('/teacher/:teacher_id', protect, (req, res) => {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_passport___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_passport__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__controllers_Student_Controller__ = __webpack_require__(32);
 
- 
 
 
 
 const protect = __WEBPACK_IMPORTED_MODULE_1_passport___default.a.authenticate('jwt', {
-  session: false,
-});
+	session: false
+})
 
 let router = __WEBPACK_IMPORTED_MODULE_0_express___default.a.Router()
 /*
-  import student RESOURCE CONTROLLER 
+	import student RESOURCE CONTROLLER
 */
 let st = new __WEBPACK_IMPORTED_MODULE_2__controllers_Student_Controller__["a" /* default */]()
 
-
 router.get('/', protect, (req, res) => {
-  res.json({
-    'msg': 'Welcome to Student endpoints' 
-  })
-}) 
+	res.json({
+		'msg': 'Welcome to Student endpoints'
+	})
+})
 
 /*
-  routing the controller object through student resource endpoints
+	routing the controller object through student resource endpoints
 */
 router.post('/', protect, (req, res) => {
-  st.save(req, res)
+	st.save(req, res)
 })
 
 router.get('/:id', protect, (req, res) => {
-  st.getById(req, res)
+	st.getById(req, res)
 })
- 
+
 router.put('/:id', protect, (req, res) => {
-  st.updateById(req, res)
+	st.updateById(req, res)
 })
 
 router.delete('/:id', protect, (req, res) => {
-  st.removeById(req, res)
+	st.removeById(req, res)
 })
 
 router.get('/login/:login', protect, (req, res) => {
-   st.studentByLogin(req, res)
+	st.studentByLogin(req, res)
 })
 
 router.put('/login/:login', protect, (req, res) => {
-  st.updateByLogin(req, res)
+	st.updateByLogin(req, res)
 })
 
 router.delete('/login/:login', protect, (req, res) => {
-  st.removeByLogin(req, res)
+	st.removeByLogin(req, res)
 })
 
-
 /* harmony default export */ __webpack_exports__["a"] = (router);
+
 
 /***/ }),
 /* 18 */
@@ -1257,21 +1236,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__src_routes_Auth_Router__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__src_middleware_passport__ = __webpack_require__(12);
 /*
-  Common
+	Common
 */
 
 
 
 
 
- 
 
 /*
-  Database Import
+	Database Import
 */
 
 /*
-  Endpoints
+	Endpoints
 */
 
 
@@ -1279,7 +1257,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /*
-  middleware
+	middleware
 */
 
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_12__src_middleware_passport__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_5_passport___default.a)
@@ -1293,12 +1271,13 @@ app.use(__WEBPACK_IMPORTED_MODULE_3_cookie_parser___default()())
 app.use(__WEBPACK_IMPORTED_MODULE_0_express___default.a.static(__WEBPACK_IMPORTED_MODULE_1_path___default.a.join(__dirname, 'public')))
 
 /*
-  [Database conection]
+	[Database conection]
 */
-__WEBPACK_IMPORTED_MODULE_6__src_database_Database__["a" /* default */].init()
+const conn = new __WEBPACK_IMPORTED_MODULE_6__src_database_Database__["a" /* default */]()
+conn.init()
 
 /*
-  routes to student resource
+	routes to student resource
 */
 app.use('/student', __WEBPACK_IMPORTED_MODULE_7__src_routes_Student_Router__["a" /* default */])
 app.use('/book', __WEBPACK_IMPORTED_MODULE_8__src_routes_Book_Router__["a" /* default */])
@@ -1308,20 +1287,20 @@ app.use('/auth', __WEBPACK_IMPORTED_MODULE_11__src_routes_Auth_Router__["a" /* d
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  const err = new Error('Not Found')
-  err.status = 404
-  next(err)
+	const err = new Error('Not Found')
+	err.status = 404
+	next(err)
 })
 
 // error handler
 app.use((err, req, res) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message
-  res.locals.error = req.app.get('env') === 'development' ? err : {}
+	// set locals, only providing error in development
+	res.locals.message = err.message
+	res.locals.error = req.app.get('env') === 'development' ? err : {}
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error')
+	// render the error page
+	res.status(err.status || 500)
+	res.render('error')
 })
 
 app.listen(3000, () => {
@@ -1329,6 +1308,7 @@ app.listen(3000, () => {
 })
 
 /* harmony default export */ __webpack_exports__["default"] = (app);
+
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, "/"))
 
 /***/ }),
@@ -1505,16 +1485,13 @@ module.exports = g;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_Controller__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_Student_Model__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_Teacher_Model__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_User_Model__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__config_jwt__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_jsonwebtoken__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_jsonwebtoken___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_jsonwebtoken__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_HashPassword__ = __webpack_require__(42);
-
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__models_Student_Model__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_Teacher_Model__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_User_Model__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__config_jwt__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jsonwebtoken__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jsonwebtoken___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_jsonwebtoken__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_HashPassword__ = __webpack_require__(42);
 
 
 
@@ -1524,109 +1501,108 @@ module.exports = g;
 
 
 class AuthController {
+	singup (req, res) {
+		let data = req.body
+		data.password = __WEBPACK_IMPORTED_MODULE_5__services_HashPassword__["a" /* default */].encrypt(data.password)
+		if (data.type === 'student') {
+			let studentModel = new __WEBPACK_IMPORTED_MODULE_0__models_Student_Model__["a" /* default */](data).persist()
+			Promise.all([
+				studentModel
+			]).then((value) => {
+				if (value) {
+					res.json(this._generateToken(value[0]))
+					res.status(200)
+				} else {
+					res.send(500)
+				}
+			}).catch(err => {
+				console.log(err)
+				let errorMsg = []
+				if (err.code === 11000) {
+					if (err.errmsg.match(/email_1/)) {
+						errorMsg.push({
+							error: 'Duplicate email'
+						})
+					}
+					if (err.errmsg.match(/login_1/)) {
+						errorMsg.push({
+							error: 'Duplicate login'
+						})
+					}
+				}
+				res.json(errorMsg)
+				res.status(400)
+			})
+		} else if (data.type === 'teacher') {
+			let teacherModel = new __WEBPACK_IMPORTED_MODULE_1__models_Teacher_Model__["a" /* default */](data).persist()
 
-  singup (req, res) {
-    
-    let data = req.body
-    data.password = __WEBPACK_IMPORTED_MODULE_6__services_HashPassword__["a" /* default */].encrypt(data.password)
+			Promise.all([
+				teacherModel
+			]).then((value) => {
+				if (value) {
+					res.json(this._generateToken(value[0]))
+				}
+			}).catch(err => {
+				let errorMsg = []
 
-    if (data.type === 'student') {
-      let studentModel = new __WEBPACK_IMPORTED_MODULE_1__models_Student_Model__["a" /* default */](data).persist()
-      Promise.all([
-        studentModel
-      ]).then((value) => { 
-        if(value) {
-          res.json(this._generateToken(value[0]))
-          res.status(200);
-        }
-      }).catch(err => {
-        let error_msg = Array()
-        if (err.code == 11000) {
-          if (err.errmsg.match(/email_1/)) {
-            error_msg.push({
-              error: 'Duplicate email',
-            })
-          } 
-          if (err.errmsg.match(/login_1/)) {
-            error_msg.push({
-              error: 'Duplicate login',
-            })
-          }
-        }
-        res.json(error_msg);
-        res.status(400);
-      })
-    } else if (data.type === 'teacher') {
+				if (err.code === 11000) {
+					if (err.errmsg.match(/email_1/)) {
+						errorMsg.push({
+							error: 'Duplicate email'
+						})
+					}
+					if (err.errmsg.match(/login_1/)) {
+						errorMsg.push({
+							error: 'Duplicate login'
+						})
+					}
+				}
+				res.json(errorMsg)
+				res.status(400)
+			})
+		}
+	}
 
-      let teacherModel = new __WEBPACK_IMPORTED_MODULE_2__models_Teacher_Model__["a" /* default */](data).persist()
-      Promise.all([
-        teacherModel
-      ]).then((value) => { 
-        if(value) {
-          res.json(this._generateToken(value[0]))
-        }
-      }).catch(err => {
-        let error_msg = Array()
-        if (err.code == 11000) {
-          if (err.errmsg.match(/email_1/)) {
-            error_msg.push({
-              error: 'Duplicate email',
-            })
-          } 
-          if (err.errmsg.match(/login_1/)) {
-            error_msg.push({
-              error: 'Duplicate login',
-            })
-          }
-        }
-        res.json(error_msg);
-        res.status(400);
-      })
+	login (req, res) {
+		let data = {
+			login: req.body.login
+		}
+		console.log(data)
+		let user = new __WEBPACK_IMPORTED_MODULE_2__models_User_Model__["a" /* default */](data).getByField()
+		Promise.all([
+			user
+		]).then((value) => {
+			if (value[0][0]) {
+				if (__WEBPACK_IMPORTED_MODULE_5__services_HashPassword__["a" /* default */].encrypt(req.body.password) === value[0][0].password) {
+					res.json(this._generateToken(value[0][0]))
+				} else {
+					res.json({
+						'Error': 'Invalid Password'
+					})
+				}
+			} else {
+				res.json({
+					'Error': 'Invalid Login'
+				})
+			}
+		}).catch(err => {
+			console.log(err)
+		})
+	}
 
-    }
-
-  }
-
-  login (req, res) {
-    let data = {
-      login: req.body.login
-    }
-
-    let user = new __WEBPACK_IMPORTED_MODULE_3__models_User_Model__["a" /* default */](data).getByField()
-    Promise.all([
-      user
-    ]).then((value) =>{
-      if (value[0][0]) {
-        if (__WEBPACK_IMPORTED_MODULE_6__services_HashPassword__["a" /* default */].encrypt(req.body.password) === value[0][0].password) {
-          res.json(this._generateToken(value[0][0]))
-        } else {
-          res.json({
-            'Error': 'Invalid Password'
-          })
-        }
-      } else {
-        res.json({
-          'Error': 'Invalid Login'
-        })
-      }
-    }).catch(err => {
-      console.log(err)
-    })
-  }
-
-  _generateToken (data) {
-    let tokenInfo = {
-      'email': data.email,
-      'login': data.login,
-      '_id': data._id
-    }
-    return {
-      'acess_token': __WEBPACK_IMPORTED_MODULE_5_jsonwebtoken___default.a.sign(tokenInfo, __WEBPACK_IMPORTED_MODULE_4__config_jwt__["a" /* default */].secret, {
-        expiresIn: 10080, // in seconds
-      }),
-      'token_type': 'Bearer'
-    }
-  }
+	_generateToken (data) {
+		let tokenInfo = {
+			'email': data.email,
+			'login': data.login,
+			'_id': data._id
+		}
+		return {
+			'acess_token': __WEBPACK_IMPORTED_MODULE_4_jsonwebtoken___default.a.sign(tokenInfo, __WEBPACK_IMPORTED_MODULE_3__config_jwt__["a" /* default */].secret, {
+				expiresIn: 10080 // in seconds
+			}),
+			'token_type': 'Bearer'
+		}
+	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = AuthController;
 
@@ -1644,12 +1620,12 @@ class AuthController {
 
 
 class BookController extends __WEBPACK_IMPORTED_MODULE_0__Base_Controller__["a" /* default */] {
-
-  constructor() {
-    super(__WEBPACK_IMPORTED_MODULE_1__models_Book_Model__["a" /* default */])
-  }
+	constructor () {
+		super(__WEBPACK_IMPORTED_MODULE_1__models_Book_Model__["a" /* default */])
+	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = BookController;
+
 
 
 /***/ }),
@@ -1664,12 +1640,12 @@ class BookController extends __WEBPACK_IMPORTED_MODULE_0__Base_Controller__["a" 
 
 
 class ChaperController extends __WEBPACK_IMPORTED_MODULE_0__Base_Controller__["a" /* default */] {
-
-  constructor() {
-    super(__WEBPACK_IMPORTED_MODULE_1__models_Chapter_Model__["a" /* default */])
-  }
+	constructor () {
+		super(__WEBPACK_IMPORTED_MODULE_1__models_Chapter_Model__["a" /* default */])
+	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = ChaperController;
+
 
 
 /***/ }),
@@ -1684,33 +1660,31 @@ class ChaperController extends __WEBPACK_IMPORTED_MODULE_0__Base_Controller__["a
 
 
 class ClassController extends __WEBPACK_IMPORTED_MODULE_0__Base_Controller__["a" /* default */] {
+	constructor () {
+		super(__WEBPACK_IMPORTED_MODULE_1__models_Class_Model__["a" /* default */])
+	}
 
-  constructor() {
-    super(__WEBPACK_IMPORTED_MODULE_1__models_Class_Model__["a" /* default */])
-  }
+	teacherClasses (req, res) {
+		let data = {
+			teacher: req.params.teacher_id
+		}
 
-  teacherClasses (req, res) {
-    let data = {
-      teacher: req.params.teacher_id
-    }
+		let classModel = new __WEBPACK_IMPORTED_MODULE_1__models_Class_Model__["a" /* default */](data).getByField()
 
-    let classModel = new __WEBPACK_IMPORTED_MODULE_1__models_Class_Model__["a" /* default */](data).getByField()
-
-    Promise.all([
-      classModel
-    ]).then((classes) => {
-      if (classes) {
-        res.json(classes[0])
-        res.status(200)
-      }
-    }).catch(err => {
-      console.log(err)
-    })
-
-  }
-
+		Promise.all([
+			classModel
+		]).then((classes) => {
+			if (classes) {
+				res.json(classes[0])
+				res.status(200)
+			}
+		}).catch(err => {
+			console.log(err)
+		})
+	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = ClassController;
+
 
 
 /***/ }),
@@ -1724,107 +1698,106 @@ class ClassController extends __WEBPACK_IMPORTED_MODULE_0__Base_Controller__["a"
 
 
 /*
-  Model operations to Student
+	Model operations to Student
 */
 /*
-  Because this class extends to Controller we inherit from then all the basics data Operations.
-  More specifcs RESOURCES CONTROL OPERATIONS should be implemented here
+	Because this class extends to Controller we inherit from then all the basics data Operations.
+	More specifcs RESOURCES CONTROL OPERATIONS should be implemented here
 */
 class StudentController extends __WEBPACK_IMPORTED_MODULE_0__Base_Controller__["a" /* default */] {
-   /*
-    pass the model this class will map 
-    to our parent class (Basecontroller)
-  */
-  constructor() {
-    /*
-      Calling the constructor from the parent class
-      and pass to him all the config that him needs to work
+	/*
+		pass the model this class will map
+		to our parent class (Basecontroller)
+	*/
+	constructor () {
+		/*
+			Calling the constructor from the parent class
+			and pass to him all the config that him needs to work
 
-      so ... magic, your crud its done :3
-      try with another mongooseSchema, will work,
-      
-      if its dont make sense map a mongooseSchema to 
-      a resource controller just dont override the constructor method
-      this open the possibility to bring another resources controllers(BookController, ChapterController)
-      and compose one operation with them together
-    */
-    super(__WEBPACK_IMPORTED_MODULE_1__models_Student_Model__["a" /* default */])
-  }
+			so ... magic, your crud its done :3
+			try with another mongooseSchema, will work,
 
-  /*
-    Below its a exemple of specifcs RESOURCES CONTROL OPERATIONS that
-    only make sense a Student have
-  */
+			if its dont make sense map a mongooseSchema to
+			a resource controller just dont override the constructor method
+			this open the possibility to bring another resources controllers(BookController, ChapterController)
+			and compose one operation with them together
+		*/
+		super(__WEBPACK_IMPORTED_MODULE_1__models_Student_Model__["a" /* default */])
+	}
 
-  studentByLogin(req, res) {
-    
-    let data = {
-      login: req.params.login
-    }
+	/*
+		Below its a exemple of specifcs RESOURCES CONTROL OPERATIONS that
+		only make sense a Student have
+	*/
 
-    let student = new StudentModel(data).getByField()
+	studentByLogin (req, res) {
+		let data = {
+			login: req.params.login
+		}
 
-    Promise.all([
+		let student = new __WEBPACK_IMPORTED_MODULE_1__models_Student_Model__["a" /* default */](data).getByField()
+
+		Promise.all([
 			student
 		]).then((data) => {
-			if(data) {
-        res.send(data[0])
-        res.status(200);
-        res.end()
-      }
+			if (data) {
+				res.send(data[0])
+				res.status(200)
+				res.end()
+			}
 		}).catch(err => {
-			res.json(err);
-      res.status(400);
-      res.end();
+			res.json(err)
+			res.status(400)
+			res.end()
 		})
-  }
+	}
 
-  updateByLogin(req, res) {
-    let query = {
-      login: req.params.login
-    }
+	updateByLogin (req, res) {
+		let query = {
+			login: req.params.login
+		}
 
-    let student = new StudentModel(req.body).updateByField(query)
+		let student = new __WEBPACK_IMPORTED_MODULE_1__models_Student_Model__["a" /* default */](req.body).updateByField(query)
 
-    Promise.all([
-			student
-		]).then((data) => { 
-			if(data) {
-        res.send(data[0])
-        res.status(200);
-        res.end()
-      }
-		}).catch(err => {
-			res.json(err);
-      res.status(400);
-      res.end();
-		})
-  }
-
-  removeByLogin(req, res) {
-    let query = {
-      login: req.params.login
-    }
-    
-    let student = new StudentModel().deleteByField(query)
-
-    Promise.all([
+		Promise.all([
 			student
 		]).then((data) => {
-			if(data) {
-        res.send(data[0])
-        res.status(200);
-        res.end()
-      }
+			if (data) {
+				res.send(data[0])
+				res.status(200)
+				res.end()
+			}
 		}).catch(err => {
-			res.json(err);
-      res.status(400);
-      res.end();
+			res.json(err)
+			res.status(400)
+			res.end()
 		})
-  }
+	}
 
+	removeByLogin (req, res) {
+		let query = {
+			login: req.params.login
+		}
+
+		let student = new __WEBPACK_IMPORTED_MODULE_1__models_Student_Model__["a" /* default */]().deleteByField(query)
+
+		Promise.all([
+			student
+		]).then((data) => {
+			if (data) {
+				res.send(data[0])
+				res.status(200)
+				res.end()
+			}
+		}).catch(err => {
+			res.json(err)
+			res.status(400)
+			res.end()
+		})
+	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = StudentController;
+
 
 
 /***/ }),
@@ -1832,20 +1805,19 @@ class StudentController extends __WEBPACK_IMPORTED_MODULE_0__Base_Controller__["
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__schema_Book__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__schemes_Book__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Base_Model__ = __webpack_require__(3);
 
 
 
 
 class BookModel extends __WEBPACK_IMPORTED_MODULE_1__Base_Model__["a" /* default */] {
-
-  constructor(data) {
-    super(__WEBPACK_IMPORTED_MODULE_0__schema_Book__["a" /* default */], '_id', data)
-  }
- 
+	constructor (data) {
+		super(__WEBPACK_IMPORTED_MODULE_0__schemes_Book__["a" /* default */], '_id', data)
+	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = BookModel;
+
 
 
 /***/ }),
@@ -1853,20 +1825,19 @@ class BookModel extends __WEBPACK_IMPORTED_MODULE_1__Base_Model__["a" /* default
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__schema_Chapter__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__schemes_Chapter__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Base_Model__ = __webpack_require__(3);
 
 
 
 
 class ChapterModel extends __WEBPACK_IMPORTED_MODULE_1__Base_Model__["a" /* default */] {
-
-  constructor(data) {
-    super(__WEBPACK_IMPORTED_MODULE_0__schema_Chapter__["a" /* default */], '_id', data)
-  }
- 
+	constructor (data) {
+		super(__WEBPACK_IMPORTED_MODULE_0__schemes_Chapter__["a" /* default */], '_id', data)
+	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = ChapterModel;
+
 
 
 /***/ }),
@@ -1874,36 +1845,35 @@ class ChapterModel extends __WEBPACK_IMPORTED_MODULE_1__Base_Model__["a" /* defa
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__schema_Class__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__schemes_Class__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Base_Model__ = __webpack_require__(3);
 
 
 
-
 /*
-  Model operations to Student
+	Model operations to Student
 */
 /*
-  Because this class extends to BaseModel we inherit from then all the basics data Operations.
-  More specifcs data operetions should be implemented here
+	Because this class extends to BaseModel we inherit from then all the basics data Operations.
+	More specifcs data operetions should be implemented here
 */
 class TeacherModel extends __WEBPACK_IMPORTED_MODULE_1__Base_Model__["a" /* default */] {
-  /*
-    pass data(req.params or req.body stuff) to our parent class (BaseModel)
-  */
-  constructor(data) {
-    /*
-      Calling the constructor from the parent class
-      and pass to him all the config that him needs to work
+	/*
+		pass data(req.params or req.body stuff) to our parent class (BaseModel)
+	*/
+	constructor (data) {
+		/*
+			Calling the constructor from the parent class
+			and pass to him all the config that him needs to work
 
-      so ... magic, your crud its done :3
-      try with another mongooseSchema, will work 
-    */
-    super(__WEBPACK_IMPORTED_MODULE_0__schema_Class__["a" /* default */], '_id', data)
-  }
- 
+			so ... magic, your crud its done :3
+			try with another mongooseSchema, will work
+		*/
+		super(__WEBPACK_IMPORTED_MODULE_0__schemes_Class__["a" /* default */], '_id', data)
+	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = TeacherModel;
+
 
 
 /***/ }),
@@ -1911,36 +1881,35 @@ class TeacherModel extends __WEBPACK_IMPORTED_MODULE_1__Base_Model__["a" /* defa
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__schema_Teacher__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__schemes_Teacher__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Base_Model__ = __webpack_require__(3);
 
 
 
-
 /*
-  Model operations to Student
+	Model operations to Student
 */
 /*
-  Because this class extends to BaseModel we inherit from then all the basics data Operations.
-  More specifcs data operetions should be implemented here
+	Because this class extends to BaseModel we inherit from then all the basics data Operations.
+	More specifcs data operetions should be implemented here
 */
 class TeacherModel extends __WEBPACK_IMPORTED_MODULE_1__Base_Model__["a" /* default */] {
-  /*
-    pass data(req.params or req.body stuff) to our parent class (BaseModel)
-  */
-  constructor(data) {
-    /*
-      Calling the constructor from the parent class
-      and pass to him all the config that him needs to work
+	/*
+		pass data(req.params or req.body stuff) to our parent class (BaseModel)
+	*/
+	constructor (data) {
+		/*
+			Calling the constructor from the parent class
+			and pass to him all the config that him needs to work
 
-      so ... magic, your crud its done :3
-      try with another mongooseSchema, will work 
-    */
-    super(__WEBPACK_IMPORTED_MODULE_0__schema_Teacher__["a" /* default */], '_id', data)
-  }
- 
+			so ... magic, your crud its done :3
+			try with another mongooseSchema, will work
+		*/
+		super(__WEBPACK_IMPORTED_MODULE_0__schemes_Teacher__["a" /* default */], '_id', data)
+	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = TeacherModel;
+
 
 
 /***/ }),
@@ -2270,24 +2239,24 @@ const TeacherSchema = new __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.Schem
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_hash__ = __webpack_require__(27);
 
 
+
 class HashPassword {
-  
-  static encrypt (password) {
-    let cipher = __WEBPACK_IMPORTED_MODULE_0_crypto___default.a.createCipher(__WEBPACK_IMPORTED_MODULE_1__config_hash__["a" /* default */].algorithm, __WEBPACK_IMPORTED_MODULE_1__config_hash__["a" /* default */].password)
-    let crypted = cipher.update(password, 'utf8', 'hex')
-    crypted += cipher.final('hex');
-    return crypted;
-  }
+	static encrypt (password) {
+		let cipher = __WEBPACK_IMPORTED_MODULE_0_crypto___default.a.createCipher(__WEBPACK_IMPORTED_MODULE_1__config_hash__["a" /* default */].algorithm, __WEBPACK_IMPORTED_MODULE_1__config_hash__["a" /* default */].password)
+		let crypted = cipher.update(password, 'utf8', 'hex')
+		crypted += cipher.final('hex')
+		return crypted
+	}
 
-  static decrypt (password) {
-    let decipher = __WEBPACK_IMPORTED_MODULE_0_crypto___default.a.createDecipher(__WEBPACK_IMPORTED_MODULE_1__config_hash__["a" /* default */].algorithm, __WEBPACK_IMPORTED_MODULE_1__config_hash__["a" /* default */].password)
-    let dec = decipher.update(password, 'hex', 'utf8')
-    dec += decipher.final('utf8');
-    return dec;
-  }
-
+	static decrypt (password) {
+		let decipher = __WEBPACK_IMPORTED_MODULE_0_crypto___default.a.createDecipher(__WEBPACK_IMPORTED_MODULE_1__config_hash__["a" /* default */].algorithm, __WEBPACK_IMPORTED_MODULE_1__config_hash__["a" /* default */].password)
+		let dec = decipher.update(password, 'hex', 'utf8')
+		dec += decipher.final('utf8')
+		return dec
+	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = HashPassword;
+
 
 
 /***/ }),
