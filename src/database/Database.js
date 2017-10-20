@@ -9,7 +9,7 @@ export default class Database {
 	}
 
 	_production () {
-		return mongoose.connect(process.env.MONGO_URI).then(() => {
+		return mongoose.connect(process.env.MONGODB_URI).then(() => {
 			console.log('Database connected successfully')
 			return true
 		}).catch((err) => {
