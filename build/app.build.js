@@ -867,7 +867,7 @@ class Database {
 	}
 
 	_production () {
-		return __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.connect('mongodb://heroku_z1rp5mnh:9idkpr8q4q5ef78nifns2p1259@ds117615.mlab.com:17615/heroku_z1rp5mnh').then(() => {
+		return __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.connect('mongodb://heroku_dq9b7270:qt9jrol5hbeqj6gc3chksbau6q@ds227555.mlab.com:27555/heroku_dq9b7270').then(() => {
 			console.log('[Prod] -> Database conected')
 			return true
 		}).catch((err) => {
