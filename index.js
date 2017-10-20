@@ -26,6 +26,7 @@ import protectMiddleware from './src/middleware/passport'
 protectMiddleware(passport)
 
 let app = express()
+app.set('port', (process.env.PORT || 3000));
 
 app.use(logger('dev'))
 app.use(bodyParser.json())
@@ -66,11 +67,8 @@ app.use((err, req, res) => {
 	res.render('error')
 })
 
-let server = app.listen(process.env.PORT || 3000, function () {
-	let port = server.address().port
-	console.log("Running on port: ", port)
-	console.log('Process Port: ' + process.env.PORT)
-	console.log(process.env)
+app.listen(app.get('port'), function () {
+	console.log("Running on port: ", app.get('port'))
 })
 
 export default app
