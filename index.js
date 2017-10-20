@@ -66,10 +66,9 @@ app.use((err, req, res) => {
 	res.render('error')
 })
 
-app.listen(parseInt(process.env.PORT, 10) || 3000, () => {
-	if(process.env.PORT) {
-		console.log('Port:' + process.env.PORT)
-	}
+let server = app.listen(process.env.PORT || 3000, function () {
+	let port = server.address().port
+	console.log("Running on port", port)
 })
 
 export default app
