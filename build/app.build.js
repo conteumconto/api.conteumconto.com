@@ -863,12 +863,12 @@ var substr = 'ab'.substr(-1) === 'b'
 class Database {
 	init () {
 		__WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.Promise = global.Promise
-		return process.env.DEV ? this._local() : this._production()
+		return process.env.MONGODB_URI ? this._production() : this._local()
 	}
 
 	_production () {
 		return __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.connect(process.env.MONGODB_URI).then(() => {
-			console.log('Database connected successfully')
+			console.log('[Prod] -> Database conected')
 			return true
 		}).catch((err) => {
 			console.error(err)
@@ -880,7 +880,7 @@ class Database {
 											__WEBPACK_IMPORTED_MODULE_1__config_database__["a" /* default */].dev.local.port + '/' + __WEBPACK_IMPORTED_MODULE_1__config_database__["a" /* default */].dev.local.database
 
 		return __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.connect(localURI).then(() => {
-			console.log('Database connected successfully')
+			console.log('[Dev] -> Database conected')
 			return true
 		}).catch((err) => {
 			console.error(err)
