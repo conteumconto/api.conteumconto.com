@@ -1307,6 +1307,7 @@ let server = app.listen(process.env.PORT || 3000, function () {
 	let port = server.address().port
 	console.log("Running on port: ", port)
 	console.log('Process Port: ' + process.env.PORT)
+	console.log('Process Port: ' + process.env.MONGODB_URI)
 })
 
 /* harmony default export */ __webpack_exports__["default"] = (app);
