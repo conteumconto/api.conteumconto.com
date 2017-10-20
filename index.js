@@ -36,7 +36,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 /*
 	[Database conection]
 */
-Database.init()
+const conn = new Database()
+conn.init()
 
 /*
 	routes to student resource
