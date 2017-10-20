@@ -1,0 +1,3 @@
+build/*.js
+src/config/*.js
+src/models/schemes/*.js
