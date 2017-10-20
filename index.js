@@ -66,9 +66,9 @@ app.use((err, req, res) => {
 	res.render('error')
 })
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(parseInt(process.env.PORT, 10) || 3000, () => {
 	if(process.env.PORT) {
-		console.log(process.env.PORT)
+		console.log('Port:' + process.env.PORT)
 	}
 })
 
