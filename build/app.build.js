@@ -1304,7 +1304,9 @@ app.use((err, req, res) => {
 })
 
 app.listen(process.env.PORT || 3000, () => {
-	console.log('Listening on 3000')
+	if(process.env.PORT) {
+		console.log(process.env.PORT)
+	}
 })
 
 /* harmony default export */ __webpack_exports__["default"] = (app);
