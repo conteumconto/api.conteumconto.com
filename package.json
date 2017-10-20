@@ -7,8 +7,8 @@
     "start": "node ./build/app.build.js",
     "build": "webpack",
     "test": "mocha --compilers js:babel-core/register",
-    "dev": "DEV=True nodemon index.js --exec babel-node",
-    "lint": "nodemon --exec eslint src/services/*.js"
+    "dev": "DEV=True nodemon index.js --exec \" npm run lint && babel-node \"",
+    "lint": "eslint src/**"
   },
   "author": "",
   "license": "ISC",
