@@ -1216,7 +1216,7 @@ module.exports = require("morgan");
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function(process, __dirname) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_express__ = __webpack_require__(1);
+/* WEBPACK VAR INJECTION */(function(__dirname, process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_express__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_express___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_express__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_path__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_path___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_path__);
@@ -1263,7 +1263,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_12__src_middleware_passport__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_5_passport___default.a)
 
 let app = __WEBPACK_IMPORTED_MODULE_0_express___default()()
-app.set('port', (process.env.PORT || 3000));
 
 app.use(__WEBPACK_IMPORTED_MODULE_2_morgan___default()('dev'))
 app.use(__WEBPACK_IMPORTED_MODULE_4_body_parser___default.a.json())
@@ -1304,13 +1303,15 @@ app.use((err, req, res) => {
 	res.render('error')
 })
 
-app.listen(app.get('port'), function () {
-	console.log("Running on port: ", app.get('port'))
+var port = process.env.PORT || 5000
+
+app.listen(port, function () {
+	console.log("Running on port: ", port)
 })
 
 /* harmony default export */ __webpack_exports__["default"] = (app);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(5), "/"))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, "/", __webpack_require__(5)))
 
 /***/ }),
 /* 22 */
