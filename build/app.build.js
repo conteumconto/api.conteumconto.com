@@ -1303,7 +1303,7 @@ app.use((err, req, res) => {
 	res.render('error')
 })
 
-var port = undefined || 5000
+var port = process.env.PORT || 5000
 
 app.listen(port, function () {
 	console.log("Running on port: ", port)
