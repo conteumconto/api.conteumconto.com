@@ -8,12 +8,12 @@ var fs = require('fs');
 */
 var nodeModules = {};
 fs.readdirSync('node_modules')
-    .filter(function(x) {
-        return ['.bin'].indexOf(x) === -1;
-    })
-    .forEach(function(mod) {
-        nodeModules[mod] = 'commonjs ' + mod;
-    });
+	.filter(function(x) {
+		return ['.bin'].indexOf(x) === -1;
+	})
+	.forEach(function(mod) {
+		nodeModules[mod] = 'commonjs ' + mod;
+	});
 
 
 module.exports = {
@@ -29,5 +29,10 @@ module.exports = {
 			exclude: '/node_modules/',
 			loader: 'babel-loader'
 		}]
-	}
+	},
+	plugins: [
+		new webpack.DefinePlugin({
+			'process.env.PORT': JSON.stringify(process.env.PORT)
+		})
+	]
 }
