@@ -296,58 +296,6 @@ class BaseController {
 
 /***/ }),
 /* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mongoose__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mongoose___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mongoose__);
-
-
-// This model refers to the creation of any person(Student, Teacher...), which will be inherited by other models.
-
-/**
- * Restrictions
- */
-
-const nameRestriction = {
-  type: String,
-  required: [true, 'No name given'],
-  minlength: [3, 'Name too short'],
-  maxlength: [100, 'Name too big'],
-};
-
-const birthDayRestriction = {
-  type: String,
-  required: [true, 'No birth day given'],
-};
-
-const loginRestriction = {
-  type: String,
-  required: [true, 'No login given'],
-  index: {
-      unique: true,
-  },
-};
-
-const passwordRestriction = {
-  type: String,
-  required: [true, 'No password given'],
-};
-
-
-// Create Schema
-const userSchema = new __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.Schema({
-  first_name: nameRestriction,
-  last_name: nameRestriction,
-  birth_day: birthDayRestriction,
-  login: loginRestriction,
-  password: passwordRestriction,
-});
-
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.model('User', userSchema));
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -537,6 +485,58 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mongoose__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mongoose___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mongoose__);
+
+
+// This model refers to the creation of any person(Student, Teacher...), which will be inherited by other models.
+
+/**
+ * Restrictions
+ */
+
+const nameRestriction = {
+  type: String,
+  required: [true, 'No name given'],
+  minlength: [3, 'Name too short'],
+  maxlength: [100, 'Name too big'],
+};
+
+const birthDayRestriction = {
+  type: String,
+  required: [true, 'No birth day given'],
+};
+
+const loginRestriction = {
+  type: String,
+  required: [true, 'No login given'],
+  index: {
+      unique: true,
+  },
+};
+
+const passwordRestriction = {
+  type: String,
+  required: [true, 'No password given'],
+};
+
+
+// Create Schema
+const userSchema = new __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.Schema({
+  first_name: nameRestriction,
+  last_name: nameRestriction,
+  birth_day: birthDayRestriction,
+  login: loginRestriction,
+  password: passwordRestriction,
+});
+
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.model('User', userSchema));
+
+/***/ }),
 /* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -586,7 +586,7 @@ class StudentModel extends __WEBPACK_IMPORTED_MODULE_1__Base_Model__["a" /* defa
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__schemes_User__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__schemes_User__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Base_Model__ = __webpack_require__(3);
 
 
@@ -846,7 +846,7 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
 /* 11 */
@@ -890,7 +890,7 @@ class Database {
 /* harmony export (immutable) */ __webpack_exports__["a"] = Database;
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(25), __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(25), __webpack_require__(5)))
 
 /***/ }),
 /* 12 */
@@ -1216,7 +1216,7 @@ module.exports = require("morgan");
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function(__dirname) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_express__ = __webpack_require__(1);
+/* WEBPACK VAR INJECTION */(function(__dirname, process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_express__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_express___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_express__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_path__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_path___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_path__);
@@ -1303,15 +1303,15 @@ app.use((err, req, res) => {
 	res.render('error')
 })
 
-var port = process.env.PORT || 5000
-
+var port = process.env.PORT
+console.log(process.env.PORT)
 app.listen(port, function () {
 	console.log("Running on port: ", port)
 })
 
 /* harmony default export */ __webpack_exports__["default"] = (app);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, "/"))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, "/", __webpack_require__(5)))
 
 /***/ }),
 /* 22 */
@@ -2136,7 +2136,7 @@ const classSchema = new __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.Schema(
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mongoose__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mongoose___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mongoose__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__User__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__User__ = __webpack_require__(6);
 
 
 
@@ -2175,7 +2175,7 @@ const StudentSchema = new __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.Schem
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mongoose__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mongoose___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mongoose__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__User__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__User__ = __webpack_require__(6);
 
 
 

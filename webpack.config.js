@@ -31,8 +31,10 @@ module.exports = {
 		}]
 	},
 	plugins: [
-		new webpack.DefinePlugin({
-			'process.env.PORT': JSON.stringify(process.env.PORT)
-		})
-	]
+		new webpack.DefinePlugin([
+			new webpack.EnvironmentPlugin({
+				PORT: JSON.stringify(process.env.PORT)
+			})
+		])
+	 ]
 }
