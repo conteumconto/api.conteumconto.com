@@ -6,7 +6,7 @@
  * StudentController handle with Student Resource Api.
  * Pass a Student Object Model(\Models\StudentModel) to the constructor 
  * of parent class (\Controller\BaseController) for it map the basic database crud operations 
- * to this Object
+ * to this Object.
  * @module StudentController
  * @extends module:BaseController
 */

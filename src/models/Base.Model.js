@@ -26,7 +26,8 @@ export default class BaseModel {
 		/**
 		 * @property {object} Scheme - Scheme Object(eg.: \models\schemes\Student\).
 		 * @property {string} key - identifier field of this Scheme.
-		 * @property {string} data - two way data bind between the requisition object that we could store in mongodb and result of query in data stored on mongoDB
+		 * @property {string} data - two way data bind between the requisition object that 
+		 * 	we could store in mongodb and result of query in data stored on mongoDB.
 		*/
 		mongoose.Promise = Promise
 		this.Scheme = Scheme
@@ -35,8 +36,8 @@ export default class BaseModel {
 	}
 	/**
 	 * Generic Persist Method.
-	 * Store the data property
-	 * When the promise is resolved this method retrieves the Object stored in MongoDB
+	 * Store the data property.
+	 * When the promise is resolved this method retrieves the Object stored in MongoDB.
 	 * @name Persist
 	 * @method persist
 	 * @return {object} Return a promisse to who intent to save data.
@@ -47,8 +48,8 @@ export default class BaseModel {
 	}
 	/**
 	 * Generic GetById Method.
-	 * Query this.Schema by identifier field
-	 * When the promise is resolved this method retrieves the Object stored in MongoDB
+	 * Query this.Schema by identifier field.
+	 * When the promise is resolved this method retrieves the Object stored in MongoDB.
 	 *
 	 * @name GetById
 	 * @method getById
@@ -59,8 +60,8 @@ export default class BaseModel {
 	}
 	/**
 	 * Generic UpdateById Method.
-	 * Query this.Schema by identifier field
-	 * When this promise is resolved this method retrieves the Object update in MongoDB
+	 * Query this.Schema by identifier field.
+	 * When this promise is resolved this method retrieves the Object update in MongoDB.
 	 *
 	 * @name UpdateById
 	 * @method updateById
@@ -72,9 +73,9 @@ export default class BaseModel {
 
 	/**
 	 * Generic DeleteById Method.
-	 * Query this.Schema by identifier field
+	 * Query this.Schema by identifier field.
 	 * When the promisse its resolved this method retrives a number of rows afected by
-	 * findAndRemove action. Must be one because ID its unique
+	 * findAndRemove action. Must be one because ID its unique.
 	 *
 	 * @name DeleteById
 	 * @method deleteById
@@ -89,8 +90,8 @@ export default class BaseModel {
 	*/
 	/**
 	 * Generic GetByField Method.
-	 * Query this.Schema by Data Object
-	 * When the promisse is resolved this method retrieves the Object stored in MongoDB
+	 * Query this.Schema by Data Object.
+	 * When the promisse is resolved this method retrieves the Object stored in MongoDB.
 	 *
 	 * @name GetByField
 	 * @method getByField
@@ -101,9 +102,9 @@ export default class BaseModel {
 	}
 	/**
 	 * Generic DeleteByField Method.
-	 * Query this.Schema by query parameter
+	 * Query this.Schema by query parameter.
 	 * When the promisse its resolved this method retrives a number of rows afected by
-	 * findAndRemove action. Must be one because ID its unique
+	 * findAndRemove action. Must be one because ID its unique.
 	 * @name DeleteByField
 	 * @method deleteByField
 	 * @param {object} query - mongoose query object.
@@ -114,9 +115,9 @@ export default class BaseModel {
 	}
 	/**
 	 * Generic UpdateByField Method.
-	 * Query this.Schema by query parameter
+	 * Query this.Schema by query parameter.
 	 * When this promise is resolved this method retrieves the Object update in MongoDB
-	 * findAndRemove action. Must be one because ID its unique
+	 * findAndRemove action. Must be one because ID its unique.
 	 * @name UpdateByField
 	 * @method updateByField
 	 * @param {object} query - mongoose query object.

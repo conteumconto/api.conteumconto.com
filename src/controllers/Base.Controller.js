@@ -29,8 +29,8 @@ export default class BaseController {
 	 * Generic Save Method.
 	 * Responds to POST /{GenericResource}/.
 	 * If Success returns 200 status code and a json with this.Model saved data.
-	 * If error return 400 status code and a json => { errors }
-	 * 500 status code only will be returned if the method generates some unexpected error
+	 * If error return 400 status code and a json => { errors }.
+	 * 500 status code only will be returned if the method generates some unexpected error.
 	 * 
 	 * @name Save
 	 * @param {object} req - Express requisition object.
@@ -61,8 +61,8 @@ export default class BaseController {
 	 * Responds to GET /{GenericResource}/.
 	 * Simple query this.Model by id.
 	 * If Success returns 200 status code and a json with this.Model data.
-	 * If error return 400 status code and a json => { errors }
-	 * 500 status code only will be returned if the method generates some unexpected error
+	 * If error return 400 status code and a json => { errors }.
+	 * 500 status code only will be returned if the method generates some unexpected error.
 	 * 
 	 * @name GetById
 	 * @param {object} req - Express requisition object.
@@ -94,8 +94,8 @@ export default class BaseController {
 	 * Responds to PUT /{GenericResource}/.
 	 * Simple update this.Model by id.
 	 * If Success returns 200 status code and a json with this.Model modified data.
-	 * If error return 400 status code and a json => { errors }
-	 * 500 status code only will be returned if the method generates some unexpected error
+	 * If error return 400 status code and a json => { errors }.
+	 * 500 status code only will be returned if the method generates some unexpected error.
 	 * 
 	 * @name UpdateById
 	 * @param {object} req - Express requisition object.
@@ -126,8 +126,8 @@ export default class BaseController {
 	 * Responds to DELETE /{GenericResource}/.
 	 * Simple delete this.Model by id.
 	 * If Success returns 200 status code and a json with this.Model number of rows affected.
-	 * If error return 400 status code and a json => { errors }
-	 * 500 status code only will be returned if the method generates some unexpected error
+	 * If error return 400 status code and a json => { errors }.
+	 * 500 status code only will be returned if the method generates some unexpected error.
 	 * 
 	 * @name RemoveById
 	 * @param {object} req - Express requisition object.

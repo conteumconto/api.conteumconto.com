@@ -100,7 +100,7 @@ export default class AuthController {
 	 * @param {object} res - Express response object.
 	 * @return {json} status and return object.
 	 * @method singup
-	 * @todo Refactor this method breaking him in 2. One for student singup and another for teacher singup
+	 * @todo Refactor this method breaking him in 2. One for student singup and another for teacher singup.
 	 * @todo Write comments
 	 */
 	singup (req, res) {
@@ -206,11 +206,11 @@ export default class AuthController {
 	}
 	/**
 	 * 
-	 * Recive a Mongoose Object Scheme of User type and generates a new JWT Token
+	 * Recive a Mongoose Object Scheme of User type and generates a new JWT Token.
 	 * 
 	 * @name _generateToken
 	 * @param {object} data - models\schemes\UserModel Object.
-	 * @return {json} json containing => { acess_token: "", token_type: "" }
+	 * @return {json} json containing => { acess_token: "", token_type: "" }.
 	 * @method _generateToken
 	 * @private
 	 * @todo Write comments

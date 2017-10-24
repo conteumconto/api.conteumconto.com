@@ -6,7 +6,7 @@
  * ClassController handle with Class Resource Api.
  * Pass a Class Object Model Class (\Models\ClassModel) to the constructor 
  * of parent class (\Controller\BaseController) for it map the basic crud database operations 
- * to this Object
+ * to this Object.
  * @module ClassController
  * @extends module:BaseController
  */

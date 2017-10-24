@@ -4,7 +4,7 @@
  */
 
 /**
- * Configuration Database Module
+ * Configuration Database Module.
  * Change this configs to setup connection strings
  * @module DatabaseConfig
  */
