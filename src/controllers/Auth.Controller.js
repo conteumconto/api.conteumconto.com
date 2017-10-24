@@ -1,12 +1,60 @@
+/**
+ * @namespace Controller
+ * @property {module:AuthController} AuthController
+ */
+
+/**
+ * AuthController handle with login and singup process.
+ * @module AuthController
+ */
 'use strict'
+/**
+ * Student.Model Module
+ * @const
+ */
 import Student from '../models/Student.Model'
+/**
+ * Teacher.Model Module
+ * @const
+ */
 import Teacher from '../models/Teacher.Model'
+/**
+ * User.Model Module
+ * @const
+ */
 import User from './../models/User.Model'
+/**
+ * JWT Config Object
+ * @const
+ */
 import config from '../config/jwt'
+/**
+ * JWT module
+ * @const
+ */
 import jwt from 'jsonwebtoken'
+/**
+ * HashPassord Service Module
+ * @const
+ */
 import HashPassword from '../services/HashPassword'
 
 export default class AuthController {
+	/**
+	 * Singup method.
+	 * Responds to POST /auth/singup.
+	 * If Sucess returns 200 status code and a object => { acess_token: "", token_type: "" }.
+	 * If error return 400 status code and a object => { errors }.
+	 * 500 status code only will be returned if the method generates some unexpected error.
+	 * 
+	 * @name Singup
+	 * @param {object} req - Express requisition object.
+	 * @param {object} res - Express response object.
+	 * @return {json} status and return object.
+	 * @method singup
+	 * @todo Refactor this method breaking him in 2. One for student singup and another for teacher singup
+	 * @todo Write comments
+	 */
 	singup (req, res) {
 		let data = req.body
 		data.password = HashPassword.encrypt(data.password)
@@ -68,7 +116,20 @@ export default class AuthController {
 			})
 		}
 	}
-
+	/**
+	 * Login method.
+	 * Responds to POST /auth/login.
+	 * If Sucess returns 200 status code and a json => { acess_token: "", token_type: "" }.
+	 * If error return 400 status code and message of invalid credentials => { errors }.
+	 * 500 status code only will be returned if the method generates some unexpected error.
+	 * 
+	 * @name Login
+	 * @param {object} req - Express requisition object.
+	 * @param {object} res - Express response object.
+	 * @return {json} status and return object.
+	 * @method login
+	 * @todo Write comments
+	*/
 	login (req, res) {
 		let data = {
 			login: req.body.login
@@ -95,7 +156,18 @@ export default class AuthController {
 			console.log(err)
 		})
 	}
-
+	/**
+	 * generateToken
+	 * Recive a models\schemes\UserModel Object and generates a new JWT Token
+	 * with UserModel data.
+	 * 
+	 * @name _generateToken
+	 * @param {object} data - models\schemes\UserModel Object.
+	 * @return {json} json containing => { acess_token: "", token_type: "" }
+	 * @method _generateToken
+	 * @private
+	 * @todo Write comments
+	*/
 	_generateToken (data) {
 		let tokenInfo = {
 			'email': data.email,
@@ -106,7 +178,7 @@ export default class AuthController {
 			'acess_token': jwt.sign(tokenInfo, config.secret, {
 				expiresIn: 10080 // in seconds
 			}),
-			'token_type': 'Bearer'
+			'type_token': 'Bearer'
 		}
 	}
 }

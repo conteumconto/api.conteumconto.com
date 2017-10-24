@@ -1,3 +1,13 @@
+/**
+ * @namespace Config
+ * @property {module:DatabaseConfig} DatabaseConfig
+ */
+
+/**
+ * Configuration Database Module
+ * Change this configs to setup the connection
+ * @module DatabaseConfig
+ */
 export default {
   dev: {
     local:{

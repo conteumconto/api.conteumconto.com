@@ -1,38 +1,42 @@
+/**
+ * @namespace Controller
+ * @property {module:BaseController} BaseController
+ */
+/**
+ * @module BaseController
+ */
 'use strict'
-/*
-	Base Controller Operations
-*/
 export default class BaseController {
-	/*
-		The Constructor recives
-		@model => mongoose Schema {
-			sharing model context with the parent class
-		}
+	/**
+	 * Controllers common methods.
+ 	 * This Object isnt to instantiated. By extends this class means that controller will be
+ 	 * interact with some Database Model so this class
+ 	 * abstract basic crud controller behaviors aside mongodb.
+ 	 * Specific Controller operation shouldnt be implemented here.
+	 * @constructor
+	 * @param {object} Model - Model Object(eg.: \models\StudentModel\).
 	*/
 	constructor (Model) {
+		/**
+		 * This property its contains the Model Methods(eg.: Model().persist() -> save data on mongodb)  
+		 * @property {object} Model - Database Collection Object (eg.: \models\StudentModel\)
+		*/
 		this.Model = Model
 	}
 
-	/*
-		recives
-		@req => express.Router() req context
-		@req => express.Router() res context
-	*/
-	/*
-		Basics crud -> ID bases
-	*/
-
-	/*
-		All the methods working in the same way ->
-			resolve a promise given by mongoDB call
-	*/
-	/*
-		eg: save()
-			req -> express.Router() context
-			res -> express.Router() context
-
-			so we resolve a promise call to any model (the model this is given by our child class)
-			and before resolve we send the response to the client
+	/**
+	 * Generic Save Method.
+	 * Responds to POST /{GenericResource}/.
+	 * If Sucess returns 200 status code and a json with this.Model saved data.
+	 * If error return 400 status code and a json => { errors }
+	 * 500 status code only will be returned if the method generates some unexpected error
+	 * 
+	 * @name Save
+	 * @param {object} req - Express requisition object.
+	 * @param {object} res - Express response object.
+	 * @return {json} status and return object.
+	 * @method save
+	 * @todo Write comments
 	*/
 	save (req, res) {
 		let modelPromise = new this.Model(req.body).persist()
@@ -51,7 +55,21 @@ export default class BaseController {
 			res.end()
 		})
 	}
-
+	/**
+	 * Generic GetById Method.
+	 * Responds to GET /{GenericResource}/.
+	 * Simple query this.Model by id.
+	 * If Sucess returns 200 status code and a json with this.Model data.
+	 * If error return 400 status code and a json => { errors }
+	 * 500 status code only will be returned if the method generates some unexpected error
+	 * 
+	 * @name GetById
+	 * @param {object} req - Express requisition object.
+	 * @param {object} res - Express response object.
+	 * @return {json} status and return object.
+	 * @method getById
+	 * @todo Write comments
+	*/
 	getById (req, res) {
 		let modelPromise = new
 			this.Model({
@@ -70,7 +88,21 @@ export default class BaseController {
 			console.log(err)
 		})
 	}
-
+	/**
+	 * Generic UpdateById Method.
+	 * Responds to PUT /{GenericResource}/.
+	 * Simple update this.Model by id.
+	 * If Sucess returns 200 status code and a json with this.Model modified data.
+	 * If error return 400 status code and a json => { errors }
+	 * 500 status code only will be returned if the method generates some unexpected error
+	 * 
+	 * @name UpdateById
+	 * @param {object} req - Express requisition object.
+	 * @param {object} res - Express response object.
+	 * @return {json} status and return object.
+	 * @method updateById
+	 * @todo Write comments
+	*/
 	updateById (req, res) {
 		let modelPromise = new this.Model(req.body).updateById()
 
@@ -88,7 +120,21 @@ export default class BaseController {
 			res.end()
 		})
 	}
-
+	/**
+	 * Generic RemoveById Method.
+	 * Responds to DELETE /{GenericResource}/.
+	 * Simple delete this.Model by id.
+	 * If Sucess returns 200 status code and a json with this.Model number of rows affected.
+	 * If error return 400 status code and a json => { errors }
+	 * 500 status code only will be returned if the method generates some unexpected error
+	 * 
+	 * @name RemoveById
+	 * @param {object} req - Express requisition object.
+	 * @param {object} res - Express response object.
+	 * @return {json} status and return object.
+	 * @method removeById
+	 * @todo Write comments
+	*/
 	removeById (req, res) {
 		let data = {
 			_id: req.params.id
