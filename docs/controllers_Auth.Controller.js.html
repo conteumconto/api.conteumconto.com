@@ -91,7 +91,7 @@ export default class AuthController {
 	/**
 	 * Singup method.
 	 * Responds to POST /auth/singup.
-	 * If Sucess returns 200 status code and a object => { acess_token: "", token_type: "" }.
+	 * If Success returns 200 status code and a object => { acess_token: "", token_type: "" }.
 	 * If error return 400 status code and a object => { errors }.
 	 * 500 status code only will be returned if the method generates some unexpected error.
 	 * 
@@ -167,7 +167,7 @@ export default class AuthController {
 	/**
 	 * Login method.
 	 * Responds to POST /auth/login.
-	 * If Sucess returns 200 status code and a json => { acess_token: "", token_type: "" }.
+	 * If Success returns 200 status code and a json => { acess_token: "", token_type: "" }.
 	 * If error return 400 status code and message of invalid credentials => { errors }.
 	 * 500 status code only will be returned if the method generates some unexpected error.
 	 * 
@@ -205,9 +205,8 @@ export default class AuthController {
 		})
 	}
 	/**
-	 * generateToken
-	 * Recive a models\schemes\UserModel Object and generates a new JWT Token
-	 * with UserModel data.
+	 * 
+	 * Recive a Mongoose Object Scheme of User type and generates a new JWT Token
 	 * 
 	 * @name _generateToken
 	 * @param {object} data - models\schemes\UserModel Object.

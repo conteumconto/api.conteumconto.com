@@ -56,10 +56,11 @@
 'use strict'
 export default class BaseController {
 	/**
-	 * Controllers common methods.
- 	 * This Object isnt to instantiated. By extends this class means that controller will be
- 	 * interact with some Database Model so this class
- 	 * abstract basic crud controller behaviors aside mongodb.
+	 * Controllers Common Object.
+	 * Controller Objects could extends this Abstract Object Controller
+	 * (\Controllers\BaseController) wich means that Controller Object will must be interact 
+	 * with some Object Model, so, this Abstract Object Controller handles with basics CRUD 
+	 * Controller methods aside Model Objects for us.
  	 * Specific Controller operation shouldnt be implemented here.
 	 * @constructor
 	 * @param {object} Model - Model Object(eg.: \models\StudentModel\).
@@ -75,7 +76,7 @@ export default class BaseController {
 	/**
 	 * Generic Save Method.
 	 * Responds to POST /{GenericResource}/.
-	 * If Sucess returns 200 status code and a json with this.Model saved data.
+	 * If Success returns 200 status code and a json with this.Model saved data.
 	 * If error return 400 status code and a json => { errors }
 	 * 500 status code only will be returned if the method generates some unexpected error
 	 * 
@@ -107,7 +108,7 @@ export default class BaseController {
 	 * Generic GetById Method.
 	 * Responds to GET /{GenericResource}/.
 	 * Simple query this.Model by id.
-	 * If Sucess returns 200 status code and a json with this.Model data.
+	 * If Success returns 200 status code and a json with this.Model data.
 	 * If error return 400 status code and a json => { errors }
 	 * 500 status code only will be returned if the method generates some unexpected error
 	 * 
@@ -140,7 +141,7 @@ export default class BaseController {
 	 * Generic UpdateById Method.
 	 * Responds to PUT /{GenericResource}/.
 	 * Simple update this.Model by id.
-	 * If Sucess returns 200 status code and a json with this.Model modified data.
+	 * If Success returns 200 status code and a json with this.Model modified data.
 	 * If error return 400 status code and a json => { errors }
 	 * 500 status code only will be returned if the method generates some unexpected error
 	 * 
@@ -172,7 +173,7 @@ export default class BaseController {
 	 * Generic RemoveById Method.
 	 * Responds to DELETE /{GenericResource}/.
 	 * Simple delete this.Model by id.
-	 * If Sucess returns 200 status code and a json with this.Model number of rows affected.
+	 * If Success returns 200 status code and a json with this.Model number of rows affected.
 	 * If error return 400 status code and a json => { errors }
 	 * 500 status code only will be returned if the method generates some unexpected error
 	 * 

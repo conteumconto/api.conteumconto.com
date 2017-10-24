@@ -20,8 +20,8 @@ import config from '../config/database'
 export default class Database {
 	/**
 	 * Init method.
-	 * Start a new connetion with MongoDB
-	 * If the process.env.DEV === true this method will try to connect with your local
+	 * Starts new Connection with MongoDB.
+	 * If the process.env.DEV === True this method will try to connect with your local
 	 * database. Change the connection constans in Config Database Module
 	 * 
 	 * @name Singup
@@ -56,7 +56,7 @@ export default class Database {
 	/**
 	 * _local Connection method.
 	 * Make a connection with localhost MongoDB test Database.
-	 * Change the connection constans in Config Database Module.
+	 * Change the connection constants in Config Database Module(\Config\DatabaseConfig).
 	 * 
 	 * @name _local
 	 * @return {object} MongoDB:Local Connection.

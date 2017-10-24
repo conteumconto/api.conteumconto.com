@@ -14,11 +14,12 @@ import mongoose from 'mongoose'
 
 export default class BaseModel {
 	/**
-	 * Model common methods.
- 	 * This Object isnt to instantiated. By extends this class means that Model will be
- 	 * interact with some MongoDB Collection so this class
- 	 * abstract basic crud behaviors aside mongoose.
- 	 * Specific Database Operations shouldnt be implemented here.
+	 * Models Common Object.
+	 * Models Objects could extends this Abstract Object Models
+	 * (\Models\BaseModel) wich means that Models Object will must be interact 
+	 * with some Mongoose Object Scheme, so, this Abstract Object Models handles with basics CRUD 
+	 * Models methods aside Mongoose Object Scheme for us.
+	 * Specific Model Operations shouldnt be implemented here.
 	 * @constructor
 	*/
 	constructor (Scheme, key, data) {
@@ -35,7 +36,7 @@ export default class BaseModel {
 	/**
 	 * Generic Persist Method.
 	 * Store the data property
-	 * When the promisse is resolved this method retrieves the Object stored in MongoDB
+	 * When the promise is resolved this method retrieves the Object stored in MongoDB
 	 * @name Persist
 	 * @method persist
 	 * @return {object} Return a promisse to who intent to save data.
@@ -47,11 +48,11 @@ export default class BaseModel {
 	/**
 	 * Generic GetById Method.
 	 * Query this.Schema by identifier field
-	 * When the promisse is resolved this method retrieves the Object stored in MongoDB
+	 * When the promise is resolved this method retrieves the Object stored in MongoDB
 	 *
 	 * @name GetById
 	 * @method getById
-	 * @return {object} Return a promisse to who intent to retrieves data.
+	 * @return {object} Return a promise to who intend to retrieves data.
 	*/
 	getById () {
 		return this.Scheme.find({_id: this.data._id}).exec()
@@ -63,7 +64,7 @@ export default class BaseModel {
 	 *
 	 * @name UpdateById
 	 * @method updateById
-	 * @return {object} Return a promisse to who intent to update data.
+	 * @return {object} Return a promisse to who intend to update data.
 	*/
 	updateById () {
 		return this.Scheme.findByIdAndUpdate(this.data._id, this.data)
@@ -77,7 +78,7 @@ export default class BaseModel {
 	 *
 	 * @name DeleteById
 	 * @method deleteById
-	 * @return {object} Return a promisse to who intent to delete data.
+	 * @return {object} Return a promisse to who intend to delete data.
 	*/
 	deleteById () {
 		return this.Scheme.findByIdAndRemove(this.data._id)
@@ -93,7 +94,7 @@ export default class BaseModel {
 	 *
 	 * @name GetByField
 	 * @method getByField
-	 * @return {object} Return a promisse to who intent to retrives data.
+	 * @return {object} Return a promisse to who intend to retrives data.
 	*/
 	getByField () {
 		return this.Scheme.find(this.data).exec()
@@ -106,7 +107,7 @@ export default class BaseModel {
 	 * @name DeleteByField
 	 * @method deleteByField
 	 * @param {object} query - mongoose query object.
-	 * @return {object} Return a promisse to who intent to delete data.
+	 * @return {object} Return a promisse to who intend to delete data.
 	*/
 	deleteByField (query) {
 		return this.Scheme.findOneAndRemove(query).exec()
@@ -119,7 +120,7 @@ export default class BaseModel {
 	 * @name UpdateByField
 	 * @method updateByField
 	 * @param {object} query - mongoose query object.
-	 * @return {object} Return a promisse to who intent to update data.
+	 * @return {object} Return a promisse to who intend to update data.
 	*/
 	updateByField (query) {
 		return this.Scheme.update(query, this.data)

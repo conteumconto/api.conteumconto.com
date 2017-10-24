@@ -5,7 +5,7 @@
 
 /**
  * Configuration Database Module
- * Change this configs to setup the connection
+ * Change this configs to setup connection strings
  * @module DatabaseConfig
  */
 export default {

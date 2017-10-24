@@ -4,8 +4,8 @@
  */
 /**
  * ClassController handle with Class Resource Api.
- * Pass a models\ClassModel Object to the constructor 
- * of parent class (Class) for it map the basic crud operations 
+ * Pass a Class Object Model Class (\Models\ClassModel) to the constructor 
+ * of parent class (\Controller\BaseController) for it map the basic crud database operations 
  * to this Object
  * @module ClassController
  * @extends module:BaseController
@@ -21,7 +21,7 @@ export default class ClassController extends BaseController {
 	/**
 	 * TeacherClasses method.
 	 * Responds to GET /teacher/:teacher_id
-	 * If Sucess returns 200 status code and a json with the classes of one specific teacher.
+	 * If Success returns 200 status code and a json with the classes of one specific teacher.
 	 * If error return 400 status code and a json => { errors }
 	 * 500 status code only will be returned if the method generates some unexpected error
 	 * 
