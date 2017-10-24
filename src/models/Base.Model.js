@@ -31,7 +31,7 @@ export default class BaseModel {
 		this.Scheme = Scheme
 		this.key = key
 		this.data = data
-	} 
+	}
 	/**
 	 * Generic Persist Method.
 	 * Store the data property
@@ -48,7 +48,7 @@ export default class BaseModel {
 	 * Generic GetById Method.
 	 * Query this.Schema by identifier field
 	 * When the promisse is resolved this method retrieves the Object stored in MongoDB
-	 * 
+	 *
 	 * @name GetById
 	 * @method getById
 	 * @return {object} Return a promisse to who intent to retrieves data.
@@ -60,7 +60,7 @@ export default class BaseModel {
 	 * Generic UpdateById Method.
 	 * Query this.Schema by identifier field
 	 * When this promise is resolved this method retrieves the Object update in MongoDB
-	 * 
+	 *
 	 * @name UpdateById
 	 * @method updateById
 	 * @return {object} Return a promisse to who intent to update data.
@@ -74,7 +74,7 @@ export default class BaseModel {
 	 * Query this.Schema by identifier field
 	 * When the promisse its resolved this method retrives a number of rows afected by
 	 * findAndRemove action. Must be one because ID its unique
-	 * 
+	 *
 	 * @name DeleteById
 	 * @method deleteById
 	 * @return {object} Return a promisse to who intent to delete data.
@@ -90,7 +90,7 @@ export default class BaseModel {
 	 * Generic GetByField Method.
 	 * Query this.Schema by Data Object
 	 * When the promisse is resolved this method retrieves the Object stored in MongoDB
-	 * 
+	 *
 	 * @name GetByField
 	 * @method getByField
 	 * @return {object} Return a promisse to who intent to retrives data.
