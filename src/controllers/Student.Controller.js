@@ -1,39 +1,44 @@
+/**
+ * @namespace Controller
+ * @property {module:StudentController} StudentController
+*/
+/**
+ * StudentController handle with Class Resource Api.
+ * Pass a models\StudentModel Object to the constructor 
+ * of parent class (BaseController) for it map the basic crud operations 
+ * to this Object
+ * @module StudentController
+ * @extends module:BaseController
+*/
 'use strict'
+/**
+ * Base.Controller Module
+ * @const
+*/
 import BaseController from './Base.Controller'
+/**
+ * Student.Model Module
+ * @const
+*/
 import StudentModel from '../models/Student.Model'
-/*
-	Model operations to Student
-*/
-/*
-	Because this class extends to Controller we inherit from then all the basics data Operations.
-	More specifcs RESOURCES CONTROL OPERATIONS should be implemented here
-*/
 export default class StudentController extends BaseController {
-	/*
-		pass the model this class will map
-		to our parent class (Basecontroller)
-	*/
 	constructor () {
-		/*
-			Calling the constructor from the parent class
-			and pass to him all the config that him needs to work
-
-			so ... magic, your crud its done :3
-			try with another mongooseSchema, will work,
-
-			if its dont make sense map a mongooseSchema to
-			a resource controller just dont override the constructor method
-			this open the possibility to bring another resources controllers(BookController, ChapterController)
-			and compose one operation with them together
-		*/
 		super(StudentModel)
 	}
-
-	/*
-		Below its a exemple of specifcs RESOURCES CONTROL OPERATIONS that
-		only make sense a Student have
+	/**
+	 * StudentByLogin method.
+	 * Responds to GET /student/:login.
+	 * If Sucess returns 200 status code and a json with student data.
+	 * If error return 400 status code and a json => { errors }
+	 * 500 status code only will be returned if the method generates some unexpected error
+	 * 
+	 * @name StudentByLogin
+	 * @param {object} req - Express requisition object.
+	 * @param {object} res - Express response object.
+	 * @return {json} status and return object.
+	 * @method studentByLogin
+	 * @todo Write comments
 	*/
-
 	studentByLogin (req, res) {
 		let data = {
 			login: req.params.login
@@ -56,6 +61,20 @@ export default class StudentController extends BaseController {
 		})
 	}
 
+	/**
+	 * UpdateByLogin method.
+	 * Responds to PUT /student/:login.
+	 * If Sucess returns 200 status code and a json with student data.
+	 * If error return 400 status code and a json => { errors }
+	 * 500 status code only will be returned if the method generates some unexpected error
+	 * 
+	 * @name UpdateByLogin
+	 * @param {object} req - Express requisition object.
+	 * @param {object} res - Express response object.
+	 * @return {json} status and return object.
+	 * @method updateByLogin
+	 * @todo Write comments
+	*/
 	updateByLogin (req, res) {
 		let query = {
 			login: req.params.login
@@ -77,7 +96,20 @@ export default class StudentController extends BaseController {
 			res.end()
 		})
 	}
-
+	/**
+	 * RemoveByLogin method.
+	 * Responds to DELETE /student/:login.
+	 * If Sucess returns 200 status code and a json with number of rows affected (one).
+	 * If error return 400 status code and a json => { errors }.
+	 * 500 status code only will be returned if the method generates some unexpected error
+	 * 
+	 * @name RemoveByLogin
+	 * @param {object} req - Express requisition object.
+	 * @param {object} res - Express response object.
+	 * @return {json} status and return object.
+	 * @method removeByLogin
+	 * @todo Write comments
+	*/
 	removeByLogin (req, res) {
 		let query = {
 			login: req.params.login

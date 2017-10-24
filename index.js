@@ -22,8 +22,8 @@ import auth from './src/routes/Auth.Router'
 /*
 	middleware
 */
-import protectMiddleware from './src/middleware/passport'
-protectMiddleware(passport)
+import PassportMiddleware from './src/middleware/Passport.Middleware'
+const protect = new PassportMiddleware(passport).protect()
 
 let app = express()
 

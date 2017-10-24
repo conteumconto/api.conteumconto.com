@@ -8,6 +8,7 @@
     "build": "webpack",
     "test": "mocha --compilers js:babel-core/register",
     "dev": "DEV=True nodemon index.js --exec \" npm run lint && babel-node \"",
+    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose --readme ./README.md" ,    
     "lint": "eslint src/**"
   },
   "author": "",
@@ -27,8 +28,10 @@
     "eslint-plugin-node": "^5.2.0",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
+    "jsdoc": "^3.5.5",
     "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
+    "tui-jsdoc-template": "^1.2.2",
     "webpack": "^2.2.1"
   },
   "dependencies": {

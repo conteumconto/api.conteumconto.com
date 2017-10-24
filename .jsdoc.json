@@ -1,0 +1,26 @@
+{
+  "plugins": [],
+  "recurseDepth": 10,
+  "source": {
+    "include": ["./src/", "index.js"],
+    "exclude": [ "node_modules/", "./build", "./docs", "./test" ]
+  },
+  "sourceType": "module",
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc","closure"]
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "name": "Conte Um Conto Docs",
+    "footerText": "Conte Um Conto"
+  },
+  "opts": {
+    "destination": "./docs/",
+    "encoding": "utf8",
+    "private": true,
+    "recurse": true,
+    "template": "node_modules/tui-jsdoc-template"
+  }
+}
