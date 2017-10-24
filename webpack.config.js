@@ -23,18 +23,12 @@ module.exports = {
 		filename: 'app.build.js'
 	},
 	externals: nodeModules,
+	target: 'node',
 	module: {
 		loaders: [{
 			test: '/\.js$/',
 			exclude: '/node_modules/',
 			loader: 'babel-loader'
 		}]
-	},
-	plugins: [
-		new webpack.DefinePlugin([
-			new webpack.EnvironmentPlugin({
-				PORT: JSON.stringify(process.env.PORT)
-			})
-		])
-	 ]
+	}
 }
