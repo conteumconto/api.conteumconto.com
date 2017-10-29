@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Namespace: Middleware | Conte Um Conto Docs</title>
+    <title>Source: controllers/Teacher.Controller.js | Conte Um Conto Docs</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -41,138 +43,143 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>Middleware</h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @namespace Controller
+ * @property {module:TeacherController} TeacherController
+*/
+/**
+ * TeacherController handle with Student Resource Api.
+ * Pass a Teacher Object Model(\Models\StudentModel) to the constructor 
+ * of class parent (\Controller\BaseController) for it map the basic database crud operations 
+ * to this Object.
+ * @module TeacherController
+ * @extends module:BaseController
+*/
+'use strict'
+/**
+ * Base.Controller Module
+ * @const
+*/
+import BaseController from './Base.Controller.js'
+/**
+ * Teacher.Model Module
+ * @const
+*/
+import TeacherModel from '../models/Teacher.Model'
 
-<article>
-    
-        <div class="container-overview">
-        
-            
+export default class TeacherController extends BaseController {
+	constructor () {
+		super(TeacherModel)
+	}
+	/**
+	 * TeacherByLogin method.
+	 * Responds to GET /teacher/:login.
+	 * If Success returns 200 status code and a json with teacher data.
+	 * If error return 400 status code and a json => { errors }
+	 * 500 status code only will be returned if the method generates some unexpected error
+	 * 
+	 * @name StudentByLogin
+	 * @param {object} req - Express requisition object.
+	 * @param {object} res - Express response object.
+	 * @return {json} status and return object.
+	 * @method teacherByLogin
+	*/
+	teacherByLogin (req, res) {
+		let data = {
+			login: req.params.login
+		}
 
-            
+		let teacher = new TeacherModel(data).getByField()
 
+		Promise.all([
+			teacher
+		]).then((data) => {
+			if (data) {
+				res.send(data[0])
+				res.status(200)
+				res.end()
+			}
+		}).catch(err => {
+			res.json(err)
+			res.status(400)
+			res.end()
+		})
+	}
+	/**
+	 * UpdateByLogin method.
+	 * Responds to PUT /teacher/:login.
+	 * If Success returns 200 status code and a json with teacher data.
+	 * If error return 400 status code and a json => { errors }
+	 * 500 status code only will be returned if the method generates some unexpected error
+	 * 
+	 * @name UpdateByLogin
+	 * @param {object} req - Express requisition object.
+	 * @param {object} res - Express response object.
+	 * @return {json} status and return object.
+	 * @method updateByLogin
+	*/
+	updateByLogin (req, res) {
+		let query = {
+			login: req.params.login
+		}
 
-    <h5 class="subsection-title">Properties:</h5>
+		let teacher = new TeacherModel(req.body).updateByField(query)
 
-    
+		Promise.all([
+			teacher
+		]).then((data) => {
+			if (data) {
+				res.send(data[0])
+				res.status(200)
+				res.end()
+			}
+		}).catch(err => {
+			res.json(err)
+			res.status(400)
+			res.end()
+		})
+	}
+	/**
+	 * RemoveByLogin method.
+	 * Responds to DELETE /teacher/:login.
+	 * If Success returns 200 status code and a json with number of rows affected (one).
+	 * If error return 400 status code and a json => { errors }.
+	 * 500 status code only will be returned if the method generates some unexpected error
+	 * 
+	 * @name RemoveByLogin
+	 * @param {object} req - Express requisition object.
+	 * @param {object} res - Express response object.
+	 * @return {json} status and return object.
+	 * @method removeByLogin
+	*/
+	removeByLogin (req, res) {
+		let query = {
+			login: req.params.login
+		}
 
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
+		let teacher = new TeacherModel().deleteByField(query)
 
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>Passport</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="module-Passport.html">module:Passport</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-            
-        
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+		Promise.all([
+			teacher
+		]).then((data) => {
+			if (data) {
+				res.send(data[0])
+				res.status(200)
+				res.end()
+			}
+		}).catch(err => {
+			res.json(err)
+			res.status(400)
+			res.end()
+		})
+	}
+}
+</code></pre>
+        </article>
+    </section>
 
 
 
@@ -189,7 +196,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'Middleware_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

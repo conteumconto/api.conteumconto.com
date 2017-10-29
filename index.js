@@ -19,6 +19,7 @@ import book from './src/routes/Book.Router'
 import chapter from './src/routes/Chapter.Router'
 import cls from './src/routes/Class.Router'
 import auth from './src/routes/Auth.Router'
+import teacher from './src/routes/Teacher.Router'
 /*
 	middleware
 */
@@ -43,6 +44,7 @@ conn.init()
 	routes to student resource
 */
 app.use('/student', student)
+app.use('/teacher', teacher)
 app.use('/book', book)
 app.use('/chapter', chapter)
 app.use('/class', cls)
