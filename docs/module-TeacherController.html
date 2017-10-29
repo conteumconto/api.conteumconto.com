@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Namespace: Middleware | Conte Um Conto Docs</title>
+    <title>Module: TeacherController | Conte Um Conto Docs</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -46,7 +46,9 @@
 
 <header>
     
-        <h2>Middleware</h2>
+        <h2>TeacherController</h2>
+        
+            
         
     
 </header>
@@ -56,60 +58,43 @@
         <div class="container-overview">
         
             
-
+                <div class="description">TeacherController handle with Student Resource Api.
+Pass a Teacher Object Model(\Models\StudentModel) to the constructor 
+of class parent (\Controller\BaseController) for it map the basic database crud operations 
+to this Object.</div>
             
 
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>Passport</code></td>
-            
-
-            <td class="type">
             
                 
-<span class="param-type"><a href="module-Passport.html">module:Passport</a></span>
 
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
+<dt>
+    
+</dt>
+<dd>
 
     
-    </tbody>
-</table>
 
+    
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 
 
 <dl class="details">
@@ -146,12 +131,25 @@
 </dl>
 
 
+    
+
+</dd>
+
             
         
         </div>
     
 
     
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="module-BaseController.html">module:BaseController</a></li>
+    </ul>
+
 
     
 
@@ -165,6 +163,573 @@
 
     
 
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+                
+
+<dt>
+    
+        <h4 class="name" id="~removeByLogin">
+            
+                <span class="type-signature"><span class="icon green">inner</span> </span>removeByLogin<span class="signature">(req, res)</span><span class="type-signature"> &rarr; {json}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="controllers_Teacher.Controller.js.html">controllers/Teacher.Controller.js</a></code>,
+                <code><a href="controllers_Teacher.Controller.js.html#line97">line 97</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        RemoveByLogin method.
+Responds to DELETE /teacher/:login.
+If Success returns 200 status code and a json with number of rows affected (one).
+If error return 400 status code and a json => { errors }.
+500 status code only will be returned if the method generates some unexpected error
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Express requisition object.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Express response object.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">json</span>
+
+
+
+
+
+- status and return object.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="~teacherByLogin">
+            
+                <span class="type-signature"><span class="icon green">inner</span> </span>teacherByLogin<span class="signature">(req, res)</span><span class="type-signature"> &rarr; {json}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="controllers_Teacher.Controller.js.html">controllers/Teacher.Controller.js</a></code>,
+                <code><a href="controllers_Teacher.Controller.js.html#line29">line 29</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        TeacherByLogin method.
+Responds to GET /teacher/:login.
+If Success returns 200 status code and a json with teacher data.
+If error return 400 status code and a json => { errors }
+500 status code only will be returned if the method generates some unexpected error
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Express requisition object.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Express response object.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">json</span>
+
+
+
+
+
+- status and return object.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="~updateByLogin">
+            
+                <span class="type-signature"><span class="icon green">inner</span> </span>updateByLogin<span class="signature">(req, res)</span><span class="type-signature"> &rarr; {json}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="controllers_Teacher.Controller.js.html">controllers/Teacher.Controller.js</a></code>,
+                <code><a href="controllers_Teacher.Controller.js.html#line63">line 63</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        UpdateByLogin method.
+Responds to PUT /teacher/:login.
+If Success returns 200 status code and a json with teacher data.
+If error return 400 status code and a json => { errors }
+500 status code only will be returned if the method generates some unexpected error
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Express requisition object.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Express response object.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">json</span>
+
+
+
+
+
+- status and return object.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            </dl>
     
 
     
@@ -189,7 +754,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'Middleware_sub'.replace(/"/g, '_');
+        var id = 'module:TeacherController_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 
