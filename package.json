@@ -8,7 +8,7 @@
     "build": "webpack",
     "test": "mocha --compilers js:babel-core/register",
     "dev": "DEV=True nodemon index.js --exec \" npm run lint && babel-node \"",
-    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose --readme ./README.md" ,    
+    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose --readme ./README.md",
     "lint": "eslint src/**"
   },
   "author": "",
