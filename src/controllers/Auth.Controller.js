@@ -4,7 +4,7 @@
  */
 
 /**
- * AuthController handle with login and singup process.
+ * AuthController handle with login and signup process.
  * @module AuthController
  */
 'use strict'
@@ -34,95 +34,69 @@ import config from '../config/jwt'
  */
 import jwt from 'jsonwebtoken'
 /**
- * HashPassord Service Module
+ * HashPassword Service Module
  * @const
  */
 import HashPassword from '../services/HashPassword'
 
 export default class AuthController {
 	/**
-	 * Singup method.
-	 * Responds to POST /auth/singup.
-	 * If Success returns 200 status code and a object => { acess_token: "", token_type: "" }.
+	 * Signup method.
+	 * Responds to POST /auth/signup.
+	 * If Success returns 201 status code, user-object and token-header => { acess_token: "", token_type: "" }.
 	 * If error return 400 status code and a object => { errors }.
 	 * 500 status code only will be returned if the method generates some unexpected error.
-	 * 
-	 * @name Singup
+	 *
+	 * @name Signup
 	 * @param {object} req - Express requisition object.
 	 * @param {object} res - Express response object.
 	 * @return {json} status and return object.
-	 * @method singup
-	 * @todo Refactor this method breaking him in 2. One for student singup and another for teacher singup.
+	 * @method signup
+	 * @todo Refactor this method breaking him in 2. One for student signup and another for teacher signup.
 	 * @todo Write comments
 	 */
-	singup (req, res) {
+	signup (req, res) {
 		let data = req.body
 		data.password = HashPassword.encrypt(data.password)
-		if (data.type === 'student') {
-			let studentModel = new Student(data).persist()
-			Promise.all([
-				studentModel
-			]).then((value) => {
-				if (value) {
-					res.json(this._generateToken(value[0]))
-					res.status(200)
-				} else {
-					res.send(500)
-				}
-			}).catch(err => {
-				console.log(err)
-				let errorMsg = []
-				if (err.code === 11000) {
-					if (err.errmsg.match(/email_1/)) {
-						errorMsg.push({
-							error: 'Duplicate email'
-						})
-					}
-					if (err.errmsg.match(/login_1/)) {
-						errorMsg.push({
-							error: 'Duplicate login'
-						})
-					}
-				}
-				res.json(errorMsg)
-				res.status(400)
-			})
-		} else if (data.type === 'teacher') {
-			let teacherModel = new Teacher(data).persist()
 
-			Promise.all([
-				teacherModel
-			]).then((value) => {
-				if (value) {
-					res.json(this._generateToken(value[0]))
-				}
-			}).catch(err => {
-				let errorMsg = []
+		let model = {}
+		if (data.type === 'student') model = new Student(data).persist()
+		else if (data.type === 'teacher') model = new Teacher(data).persist()
 
-				if (err.code === 11000) {
-					if (err.errmsg.match(/email_1/)) {
-						errorMsg.push({
-							error: 'Duplicate email'
-						})
-					}
-					if (err.errmsg.match(/login_1/)) {
-						errorMsg.push({
-							error: 'Duplicate login'
-						})
-					}
+		Promise.all([
+			model
+		]).then((value) => {
+			if (value) {
+				let user = value[0].toObject()
+				delete user['password']
+
+				let token = this._generateToken(user)
+				res.set('authorization', `${token.type_token} ${token.acess_token}`)
+				res.status(201).json(user)
+			} else {
+				res.status(500).json('Ops, aconteceu algum erro! Tente mais tarde.')
+			}
+		}).catch(err => {
+			console.log(err)
+			let errorMsg
+			if (err.code === 11000) {
+				if (err.errmsg.match(/email_1/)) {
+					errorMsg = 'E-mail já existente! Tente cadastrar outro, ok?'
 				}
-				res.json(errorMsg)
-				res.status(400)
-			})
-		}
+				if (err.errmsg.match(/login_1/)) {
+					errorMsg = 'Login já existente! Tente cadastrar outro, ok?'
+				}
+			}
+			res.status(400).json(errorMsg)
+		})
 	}
 	/**
 	 * Login method.
 	 * Responds to POST /auth/login.
-	 * If Success returns 200 status code and a json => { acess_token: "", token_type: "" }.
-	 * If error return 400 status code and message of invalid credentials => { errors }.
+	 * If Success returns 200 status code, user-object and token-header => { acess_token: "", token_type: "" }.
+	 * If error return 403 status code and message of invalid credentials => { errors }.
 	 * 500 status code only will be returned if the method generates some unexpected error.
-	 * 
+	 *
 	 * @name Login
 	 * @param {object} req - Express requisition object.
 	 * @param {object} res - Express response object.
@@ -134,32 +108,32 @@ export default class AuthController {
 		let data = {
 			login: req.body.login
 		}
-		console.log(data)
+
 		let user = new User(data).getByField()
 		Promise.all([
 			user
 		]).then((value) => {
 			if (value[0][0]) {
-				if (HashPassword.encrypt(req.body.password) === value[0][0].password) {
-					res.json(this._generateToken(value[0][0]))
+				let user = value[0][0].toObject()
+				if (HashPassword.encrypt(req.body.password) === user.password) {
+					delete user['password']
+
+					let token = this._generateToken(user)
+					res.set('authorization', `${token.type_token} ${token.acess_token}`)
+					res.status(200).json(user)
 				} else {
-					res.json({
-						'Error': 'Invalid Password'
-					})
+					res.status(403).json('Usuário ou senha inválidos!').end()
 				}
 			} else {
-				res.json({
-					'Error': 'Invalid Login'
-				})
+				res.status(403).json('Usuário ou senha inválidos!').end()
 			}
-		}).catch(err => {
+		}).catch((err) => {
 			console.log(err)
 		})
 	}
 	/**
-	 * 
-	 * Recive a Mongoose Object Scheme of User type and generates a new JWT Token.
-	 * 
+	 * Receive a Mongoose Object Scheme of User type and generates a new JWT Token.
+	 *
 	 * @name _generateToken
 	 * @param {object} data - models\schemes\UserModel Object.
 	 * @return {json} json containing => { acess_token: "", token_type: "" }.
