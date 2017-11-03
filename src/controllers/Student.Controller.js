@@ -4,8 +4,8 @@
 */
 /**
  * StudentController handle with Student Resource Api.
- * Pass a Student Object Model(\Models\StudentModel) to the constructor 
- * of parent class (\Controller\BaseController) for it map the basic database crud operations 
+ * Pass a Student Object Model(\Models\StudentModel) to the constructor
+ * of parent class (\Controller\BaseController) for it map the basic database crud operations
  * to this Object.
  * @module StudentController
  * @extends module:BaseController
@@ -31,7 +31,7 @@ export default class StudentController extends BaseController {
 	 * If Success returns 200 status code and a json with student data.
 	 * If error return 400 status code and a json => { errors }
 	 * 500 status code only will be returned if the method generates some unexpected error
-	 * 
+	 *
 	 * @name StudentByLogin
 	 * @param {object} req - Express requisition object.
 	 * @param {object} res - Express response object.
@@ -67,7 +67,7 @@ export default class StudentController extends BaseController {
 	 * If Success returns 200 status code and a json with student data.
 	 * If error return 400 status code and a json => { errors }
 	 * 500 status code only will be returned if the method generates some unexpected error
-	 * 
+	 *
 	 * @name UpdateByLogin
 	 * @param {object} req - Express requisition object.
 	 * @param {object} res - Express response object.
@@ -102,7 +102,7 @@ export default class StudentController extends BaseController {
 	 * If Success returns 200 status code and a json with number of rows affected (one).
 	 * If error return 400 status code and a json => { errors }.
 	 * 500 status code only will be returned if the method generates some unexpected error
-	 * 
+	 *
 	 * @name RemoveByLogin
 	 * @param {object} req - Express requisition object.
 	 * @param {object} res - Express response object.

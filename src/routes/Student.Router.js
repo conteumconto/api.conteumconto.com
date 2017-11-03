@@ -10,12 +10,12 @@
 'use strict'
 /**
  * express module
- * @const 
+ * @const
  */
 import express from 'express'
 /**
  * passport module
- * @const 
+ * @const
  */
 import passport from 'passport'
 /**

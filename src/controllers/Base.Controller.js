@@ -10,8 +10,8 @@ export default class BaseController {
 	/**
 	 * Controllers Common Object.
 	 * Controller Objects could extends this Abstract Object Controller
-	 * (\Controllers\BaseController) wich means that Controller Object will must be interact 
-	 * with some Object Model, so, this Abstract Object Controller handles with basics CRUD 
+	 * (\Controllers\BaseController) wich means that Controller Object will must be interact
+	 * with some Object Model, so, this Abstract Object Controller handles with basics CRUD
 	 * Controller methods aside Model Objects for us.
  	 * Specific Controller operation shouldnt be implemented here.
 	 * @constructor
@@ -19,7 +19,7 @@ export default class BaseController {
 	*/
 	constructor (Model) {
 		/**
-		 * This property its contains the Model Methods(eg.: Model().persist() -> save data on mongodb)  
+		 * This property its contains the Model Methods(eg.: Model().persist() -> save data on mongodb)
 		 * @property {object} Model - Database Collection Object (eg.: \models\StudentModel\)
 		*/
 		this.Model = Model
@@ -31,7 +31,7 @@ export default class BaseController {
 	 * If Success returns 200 status code and a json with this.Model saved data.
 	 * If error return 400 status code and a json => { errors }.
 	 * 500 status code only will be returned if the method generates some unexpected error.
-	 * 
+	 *
 	 * @name Save
 	 * @param {object} req - Express requisition object.
 	 * @param {object} res - Express response object.
@@ -63,7 +63,7 @@ export default class BaseController {
 	 * If Success returns 200 status code and a json with this.Model data.
 	 * If error return 400 status code and a json => { errors }.
 	 * 500 status code only will be returned if the method generates some unexpected error.
-	 * 
+	 *
 	 * @name GetById
 	 * @param {object} req - Express requisition object.
 	 * @param {object} res - Express response object.
@@ -96,7 +96,7 @@ export default class BaseController {
 	 * If Success returns 200 status code and a json with this.Model modified data.
 	 * If error return 400 status code and a json => { errors }.
 	 * 500 status code only will be returned if the method generates some unexpected error.
-	 * 
+	 *
 	 * @name UpdateById
 	 * @param {object} req - Express requisition object.
 	 * @param {object} res - Express response object.
@@ -128,7 +128,7 @@ export default class BaseController {
 	 * If Success returns 200 status code and a json with this.Model number of rows affected.
 	 * If error return 400 status code and a json => { errors }.
 	 * 500 status code only will be returned if the method generates some unexpected error.
-	 * 
+	 *
 	 * @name RemoveById
 	 * @param {object} req - Express requisition object.
 	 * @param {object} res - Express response object.

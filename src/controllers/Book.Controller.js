@@ -4,8 +4,8 @@
  */
 /**
  * BookController handle with Book Resource Api.
- * Pass a Chapter Object Model(\Models\BookModel) to the constructor 
- * of parent class (\Controller\BaseController) for it map the basic database crud operations 
+ * Pass a Chapter Object Model(\Models\BookModel) to the constructor
+ * of parent class (\Controller\BaseController) for it map the basic database crud operations
  * to this Object.
  * @module BookController
  * @extends module:BaseController

@@ -23,8 +23,8 @@ export default class Database {
 	 * Starts new Connection with MongoDB.
 	 * If the process.env.DEV === True this method will try to connect with your local
 	 * database. Change the connection constans in Config Database Module
-	 * 
-	 * @name Singup
+	 *
+	 * @name Init
 	 * @return {object} MongoDB Connection.
 	 * @method init
 	 */
@@ -35,7 +35,7 @@ export default class Database {
 	/**
 	 * _production Connection method.
 	 * Make a connection with Heroku MLabs that is production Database.
-	 * 
+	 *
 	 * @name _production
 	 * @param {object} req - Express requisition object.
 	 * @param {object} res - Express response object.
@@ -57,7 +57,7 @@ export default class Database {
 	 * _local Connection method.
 	 * Make a connection with localhost MongoDB test Database.
 	 * Change the connection constants in Config Database Module(\Config\DatabaseConfig).
-	 * 
+	 *
 	 * @name _local
 	 * @return {object} MongoDB:Local Connection.
 	 * @method _local

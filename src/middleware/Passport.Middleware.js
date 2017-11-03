@@ -3,10 +3,10 @@
  * @property {module:Passport} Passport
  */
 /**
- * Each protected route pass through this Module. 
- * Passport Module hadle with recive a token authenticantion 
- * from some client that is intent to interact with CUC API and check if the recived 
- * token is valid. Case its VALID proced to route Case its NOT-VALID return 401 status 
+ * Each protected route pass through this Module.
+ * Passport Module hadle with recive a token authentication
+ * from some client that is intent to interact with CUC API and check if the received
+ * token is valid. Case its VALID proced to route Case its NOT-VALID return 401 status
  * code and unauthorized message
  * @module Passport
  */
@@ -38,10 +38,10 @@ export default class PassportMiddleware {
 	}
 	/**
 	 * Protect Middleware Method.
-	 * 
-	 * Recives a token from passport module and checks the token still valid
+	 *
+	 * Receives a token from passport module and checks the token still valid
 	 * and belongs an valid User on mongodb User Collection.
-	 * 
+	 *
 	 * @name Protect
 	 * @method protect
 	 * @todo Write comments
