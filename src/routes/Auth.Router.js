@@ -10,7 +10,7 @@
 'use strict'
 /**
  * express module
- * @const 
+ * @const
  */
 import express from 'express'
 /**
@@ -32,23 +32,25 @@ let router = express.Router()
 let auth = new AuthController()
 /**
  * POST /auth/login/
- * 
+ *
  * @name /auth/login/
  * @function
  * @todo write comments
  */
 router.post('/login', (req, res) => {
+	res.header('Access-Control-Expose-Headers', 'authorization')
 	auth.login(req, res)
 })
 /**
- * POST /auth/singup/
- * 
- * @name /auth/singup/
+ * POST /auth/signup/
+ *
+ * @name /auth/signup/
  * @function
  * @todo write comments
  */
-router.post('/singup', (req, res) => {
-	auth.singup(req, res)
+router.post('/signup', (req, res) => {
+	res.header('Access-Control-Expose-Headers', 'authorization')
+	auth.signup(req, res)
 })
 
 export default router
