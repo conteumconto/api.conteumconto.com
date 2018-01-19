@@ -1,11 +1,11 @@
 /**
  * @namespace Services
- * @property {module:HashPassoword} HashPassoword
+ * @property {module:HashPassword} HashPassword
  */
 
 /**
  * Encrypt and Decrypt Password Service.
- * @module HashPassoword
+ * @module HashPassword
  */
 'use strict'
 /**
@@ -22,7 +22,7 @@ import hashConfig from '../config/hash'
 export default class HashPassword {
 	/**
 	 * Encrypt a given string
-	 * 
+	 *
 	 * @name Encrypt
 	 * @param {string} password - String to Hash.
 	 * @return {string} - The String Hash.
@@ -38,7 +38,7 @@ export default class HashPassword {
 	}
 	/**
 	 * Decrypt a given string
-	 * 
+	 *
 	 * @name Decrypt
 	 * @param {string} password - String to Decrypt.
 	 * @return {string} - The String Decrypt.
