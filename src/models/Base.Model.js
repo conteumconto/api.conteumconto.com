@@ -68,7 +68,7 @@ export default class BaseModel {
 	 * @return {object} Return a promise to who intend to update data.
 	*/
 	updateById () {
-		return this.Scheme.findByIdAndUpdate(this.data._id, this.data)
+		return this.Scheme.findByIdAndUpdate(this.data._id, this.data, { new: true })
 	}
 
 	/**
@@ -124,6 +124,6 @@ export default class BaseModel {
 	 * @return {object} Return a promise to who intend to update data.
 	*/
 	updateByField (query) {
-		return this.Scheme.update(query, this.data)
+		return this.Scheme.update(query, this.data, { new: true })
 	}
 }

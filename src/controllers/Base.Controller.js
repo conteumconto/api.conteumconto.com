@@ -27,7 +27,7 @@ export default class BaseController {
 
 	/**
 	 * Generic Save Method.
-	 * Responds to POST /{GenericResource}/.
+	 * Responds to POST /{GenericResource}.
 	 * If Success returns 200 status code and a json with this.Model saved data.
 	 * If error return 400 status code and a json => { errors }.
 	 * 500 status code only will be returned if the method generates some unexpected error.

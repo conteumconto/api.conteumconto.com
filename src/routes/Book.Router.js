@@ -43,28 +43,28 @@ let router = express.Router()
  */
 let bk = new BookController()
 /**
- * GET /book/
+ * GET /book
  * Auth Required
- * @name /book/
+ * @name /book
  * @function
- * @return {json} -Welcome Endpoint Msg.
+ * @return {json} - Welcome Endpoint Msg.
  * @todo write comments
  */
-router.get('/', protect, (req, res) => {
+router.get('', protect, (req, res) => {
 	res.json({
 		'msg': 'Welcome to Book endpoints'
 	})
 })
 /**
- * POST /book/
+ * POST /book
  * Save book Endpoint
  * Auth Required
- * @name /book/
+ * @name /book
  * @function
  * @todo write comments
  */
-router.post('/', protect, (req, res) => {
-	bk.save(req, res)
+router.post('', protect, (req, res) => {
+	bk.saveBook(req, res)
 })
 /**
  * GET /book/:id

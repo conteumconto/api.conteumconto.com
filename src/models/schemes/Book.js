@@ -4,11 +4,11 @@ import mongoose from 'mongoose'
  * Restrictions
  */
 
-const studentsRestriction = [{
+const studentRestriction = {
   type: mongoose.Schema.Types.ObjectId,
   ref: 'Student',
   required: true,
-}];
+};
 
 const titleRestriction = {
   type: String,
@@ -43,7 +43,7 @@ const chaptersRestriction = [{
  */
 
 const BookSchema = new mongoose.Schema({
-  _student: studentsRestriction,
+  _student: studentRestriction,
   title: titleRestriction,
   summary: summaryRestriction,
   tags: tagsRestriction,
