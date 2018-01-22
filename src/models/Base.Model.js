@@ -16,7 +16,7 @@ export default class BaseModel {
 	/**
 	 * Models Common Object.
 	 * Models Objects could extends this Abstract Object Models
-	 * (\Models\BaseModel) wich means that Models Object will must be interact
+	 * (\Models\BaseModel) which means that Models Object will must be interact
 	 * with some Mongoose Object Scheme, so, this Abstract Object Models handles with basics CRUD
 	 * Models methods aside Mongoose Object Scheme for us.
 	 * Specific Model Operations shouldnt be implemented here.
