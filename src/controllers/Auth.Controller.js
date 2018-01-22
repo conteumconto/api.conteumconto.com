@@ -60,35 +60,27 @@ export default class AuthController {
 		data.password = HashPassword.encrypt(data.password)
 
 		let model = {}
-		if (data.type === 'student') model = new Student(data).persist()
-		else if (data.type === 'teacher') model = new Teacher(data).persist()
+		if (req.params.type === 'student') model = new Student(data).persist()
+		else if (req.params.type === 'teacher') model = new Teacher(data).persist()
 
-		Promise.all([
-			model
-		]).then((value) => {
-			if (value) {
-				let user = value[0].toObject()
-				delete user['password']
-
-				let token = this._generateToken(user)
-				res.set('authorization', `${token.type_token} ${token.acess_token}`)
-				res.status(201).json(user)
-			} else {
-				res.status(500).json('Ops, aconteceu algum erro! Tente mais tarde.')
-			}
-		}).catch(err => {
-			console.log(err)
-			let errorMsg
-			if (err.code === 11000) {
-				if (err.errmsg.match(/email_1/)) {
-					errorMsg = 'E-mail já existente! Tente cadastrar outro, ok?'
-				}
-				if (err.errmsg.match(/login_1/)) {
-					errorMsg = 'Login já existente! Tente cadastrar outro, ok?'
-				}
-			}
-			res.status(400).json(errorMsg)
-		})
+		model
+			.then(user => {
+				if (user) {
+					delete user['password']
+					let token = this._generateToken(user)
+					res.set('authorization', `${token.type_token} ${token.acess_token}`)
+					res.status(201).json(user).end()
+				} else throw new Error('user_not_saved')
+			})
+			.catch(err => {
+				console.error(err)
+				let errorMsg
+				if (err.code === 11000) {
+					if (err.errmsg.match(/email_1/)) errorMsg = 'duplicate_email'
+					else if (err.errmsg.match(/login_1/)) errorMsg = 'duplicate_login'
+				} else errorMsg = err.message
+				res.status(400).json(errorMsg).end()
+			})
 	}
 	/**
 	 * Login method.
@@ -109,27 +101,25 @@ export default class AuthController {
 			login: req.body.login
 		}
 
-		let user = new User(data).getByField()
-		Promise.all([
-			user
-		]).then((value) => {
-			if (value[0][0]) {
-				let user = value[0][0].toObject()
-				if (HashPassword.encrypt(req.body.password) === user.password) {
-					delete user['password']
-
-					let token = this._generateToken(user)
-					res.set('authorization', `${token.type_token} ${token.acess_token}`)
-					res.status(200).json(user)
-				} else {
-					res.status(403).json('Usuário ou senha inválidos!').end()
-				}
-			} else {
-				res.status(403).json('Usuário ou senha inválidos!').end()
-			}
-		}).catch((err) => {
-			console.log(err)
-		})
+		new User(data)
+			.getByField()
+			.then(user => {
+				if (user.length !== 0) {
+					user = user[0]
+					if (HashPassword.encrypt(req.body.password) === user.password) {
+						delete user['password']
+						let token = this._generateToken(user)
+						res.set('Authorization', `${token.type_token} ${token.acess_token}`)
+						res.status(200).json(user)
+					} else throw new Error('invalid_login_password')
+				// User not found
+				} else throw new Error('invalid_login_password')
+			})
+			.catch(err => {
+				console.error(err)
+				if (err.message === 'invalid_login_password') res.status(403).json(err.message).end()
+				else res.status(500).json(err.message).end()
+			})
 	}
 	/**
 	 * Receive a Mongoose Object Scheme of User type and generates a new JWT Token.

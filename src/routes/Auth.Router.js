@@ -42,13 +42,13 @@ router.post('/login', (req, res) => {
 	auth.login(req, res)
 })
 /**
- * POST /auth/signup/
+ * POST /auth/signup/:type
  *
- * @name /auth/signup/
+ * @name /auth/signup/:type
  * @function
  * @todo write comments
  */
-router.post('/signup', (req, res) => {
+router.post('/signup/:type', (req, res) => {
 	res.header('Access-Control-Expose-Headers', 'authorization')
 	auth.signup(req, res)
 })
