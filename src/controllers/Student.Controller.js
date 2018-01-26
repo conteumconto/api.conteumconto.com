@@ -17,6 +17,16 @@
 */
 import BaseController from './Base.Controller'
 /**
+ * Chapter.Controller Module
+ * @const
+*/
+import ChapterController from './Chapter.Controller'
+/**
+ * Book.Controller Module
+ * @const
+*/
+import BookController from './Book.Controller'
+/**
  * Student.Model Module
  * @const
 */
@@ -44,21 +54,16 @@ export default class StudentController extends BaseController {
 			login: req.params.login
 		}
 
-		let student = new StudentModel(data).getByField()
-
-		Promise.all([
-			student
-		]).then((data) => {
-			if (data) {
-				res.send(data[0])
-				res.status(200)
-				res.end()
-			}
-		}).catch(err => {
-			res.json(err)
-			res.status(400)
-			res.end()
-		})
+		new StudentModel(data).getByField()
+			.then(user => {
+				if (user) res.status(200).json(user).end()
+				else throw new Error('user_not_found')
+			})
+			.catch(err => {
+				console.error(err)
+				if (err.message === 'user_not_found') res.status(400).json(err.message).end()
+				else res.status(500).json(err.message).end()
+			})
 	}
 
 	/**
@@ -80,21 +85,18 @@ export default class StudentController extends BaseController {
 			login: req.params.login
 		}
 
-		let student = new StudentModel(req.body).updateByField(query)
-
-		Promise.all([
-			student
-		]).then((data) => {
-			if (data) {
-				res.send(data[0])
-				res.status(200)
-				res.end()
-			}
-		}).catch(err => {
-			res.json(err)
-			res.status(400)
-			res.end()
-		})
+		new StudentModel(req.body).updateByField(query)
+			.then(user => {
+				if (user) {
+					delete user['password']
+					res.status(200).json(user).end()
+				} else throw new Error('user_not_updated')
+			})
+			.catch(err => {
+				console.error(err)
+				if (err.message === 'user_not_updated') res.status(400).json(err.message).end()
+				else res.status(500).json(err.message).end()
+			})
 	}
 	/**
 	 * RemoveByLogin method.
@@ -114,21 +116,57 @@ export default class StudentController extends BaseController {
 		let query = {
 			login: req.params.login
 		}
+		let books = []
 
-		let student = new StudentModel().deleteByField(query)
+		// 1. Get user from ID
+		new StudentModel({_id: req.user._id}).getById()
+			.then(user => {
+				if (user.length !== 0) {
+					user = user[0]
+					books = user.books
+					// 3. Remove user chapters or doesn't run the remove query, returning flag
+					if (books.length === 0) return {not_remove_chapters: true}
+					return new ChapterController().removeByBookIdList(books)
+				} else throw new Error('object_not_found')
+			})
+			// 3. Remove user books or doesn't run the remove query, returning flag
+			.then(response => {
+				if (response.not_remove_chapters || response.result.n > 0) {
+					if (books.length === 0) return {not_remove_books: true}
+					return new BookController().removeByIdList(books)
+				} else throw new Error('object_not_deleted')
+			})
+			// 4. Finally remove user
+			.then(response => {
+				if (response.not_remove_books || response.result.n > 0) return new StudentModel().deleteByField(query)
+				else throw new Error('object_not_deleted')
+			})
+			.then(response => {
+				if (response) res.status(200).json(response).end()
+				else throw new Error('user_not_deleted')
+			})
+			// 5. Treat errors if user isn't deleted or not found
+			.catch(err => {
+				console.error(err)
+				if (err.message === 'object_not_deleted' || err.message === 'object_not_found') {
+					res.status(400).json(err.message).end()
+				} else res.status(500).json(err.message).end()
+			})
+	}
 
-		Promise.all([
-			student
-		]).then((data) => {
-			if (data) {
-				res.send(data[0])
-				res.status(200)
-				res.end()
-			}
-		}).catch(err => {
-			res.json(err)
-			res.status(400)
-			res.end()
-		})
+	/**
+	 * Get user books and filter through passed book ID
+	 * @name RemoveBookFromList
+	 * @param {Long} userId
+	 * @param {Long} bookIdId
+	 * @method removeBookFromList
+	 */
+	removeBookFromList (userId, bookId) {
+		return new this.Model({_id: userId}).getById()
+			.then(user => {
+				user = user[0]
+				user.books = user.books.filter(book => book.toString() !== bookId)
+				return new this.Model(user).updateById()
+			})
 	}
 }

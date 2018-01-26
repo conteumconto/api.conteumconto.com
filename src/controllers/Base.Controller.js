@@ -40,21 +40,16 @@ export default class BaseController {
 	 * @todo Write comments
 	*/
 	save (req, res) {
-		let modelPromise = new this.Model(req.body).persist()
-
-		Promise.all([
-			modelPromise
-		]).then((data) => {
-			if (data) {
-				res.send(data[0])
-				res.status(201)
-				res.end()
-			}
-		}).catch(err => {
-			res.json(err)
-			res.status(400)
-			res.end()
-		})
+		new this.Model(req.body).persist()
+			.then(data => {
+				if (data) res.status(200).json(data).end()
+				else throw new Error('object_not_saved')
+			})
+			.catch(err => {
+				console.error(err)
+				if (err.message === 'object_not_saved') res.status(400).json(err.message).end()
+				else res.status(500).json(err.message).end()
+			})
 	}
 	/**
 	 * Generic GetById Method.
@@ -72,22 +67,18 @@ export default class BaseController {
 	 * @todo Write comments
 	*/
 	getById (req, res) {
-		let modelPromise = new
-			this.Model({
-				_id: req.params.id
-			}).getById()
-
-		Promise.all([
-			modelPromise
-		]).then((data) => {
-			if (data) {
-				res.send(data[0][0])
-				res.status(200)
-				res.end()
-			}
-		}).catch(err => {
-			console.log(err)
-		})
+		new this.Model({_id: req.params.id}).getById()
+			.then(data => {
+				if (data.length !== 0) {
+					data = data[0]
+					res.status(200).json(data).end()
+				} else throw new Error('object_not_found')
+			})
+			.catch(err => {
+				console.error(err)
+				if (err.message === 'object_not_found') res.status(400).json(err.message).end()
+				else res.status(500).json(err.message).end()
+			})
 	}
 	/**
 	 * Generic UpdateById Method.
@@ -105,21 +96,21 @@ export default class BaseController {
 	 * @todo Write comments
 	*/
 	updateById (req, res) {
-		let modelPromise = new this.Model(req.body).updateById()
-
-		Promise.all([
-			modelPromise
-		]).then((data) => {
-			if (data) {
-				res.send(data[0])
-				res.status(200)
-				res.end()
-			}
-		}).catch(err => {
-			res.json(err)
-			res.status(400)
-			res.end()
-		})
+		new this.Model(req.body).updateById()
+			.then(data => {
+				if (data) {
+					if (data.password) {
+						data = data.toObject()
+						delete data['password']
+					}
+					res.status(200).json(data).end()
+				} else throw new Error('object_not_updated')
+			})
+			.catch(err => {
+				console.error(err)
+				if (err.message === 'object_not_updated') res.status(400).json(err.message).end()
+				else res.status(500).json(err.message).end()
+			})
 	}
 	/**
 	 * Generic RemoveById Method.
@@ -137,24 +128,32 @@ export default class BaseController {
 	 * @todo Write comments
 	*/
 	removeById (req, res) {
-		let data = {
+		const data = {
 			_id: req.params.id
 		}
 
-		let modelPromise = new this.Model(data).deleteById()
+		new this.Model(data).deleteById()
+			.then(response => {
+				if (response) res.status(200).json(response).end()
+				else throw new Error('object_not_deleted')
+			})
+			.catch(err => {
+				console.error(err)
+				if (err.message === 'object_not_deleted') res.status(400).json(err.message).end()
+				else res.status(500).json(err.message).end()
+			})
+	}
 
-		Promise.all([
-			modelPromise
-		]).then((data) => {
-			if (data) {
-				res.send(data[0])
-				res.status(200)
-				res.end()
-			}
-		}).catch(err => {
-			res.json(err)
-			res.status(400)
-			res.end()
+	/**
+	 * Remove list of model IDs
+	 * @name RemoveByIdList
+	 * @param {Array} list
+	 * @return {json} status and deleted number of rows as result.
+	 * @method removeByIdList
+	 */
+	removeByIdList (list) {
+		return new this.Model().removeByIdList({
+			'_id': { $in: list }
 		})
 	}
 }

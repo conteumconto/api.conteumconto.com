@@ -98,7 +98,7 @@ export default class BaseModel {
 	 * @return {object} Return a promise to who intend to retrives data.
 	*/
 	getByField () {
-		return this.Scheme.find(this.data).exec()
+		return this.Scheme.find(this.data).lean().exec()
 	}
 	/**
 	 * Generic DeleteByField Method.
@@ -125,5 +125,29 @@ export default class BaseModel {
 	*/
 	updateByField (query) {
 		return this.Scheme.update(query, this.data, { new: true })
+	}
+
+	/**
+	 * Generic RemoveByIdList Method.
+	 * Query this.Schema by query parameter with $in arg.
+	 * @name RemoveByIdList
+	 * @method removeByIdList
+	 * @param {object} query - mongoose query object.
+	 * @return {object} Return a promise to who intend to delete data.
+	 */
+	removeByIdList (query) {
+		return this.Scheme.remove(query).lean().exec()
+	}
+
+	/**
+	 * Generic FindByIdList Method.
+	 * Query this.Schema by query parameter with $in arg.
+	 * @name FindByIdList
+	 * @method findByIdList
+	 * @param {object} query - mongoose query object.
+	 * @return {object} Return a promise to who intend to find data.
+	 */
+	findByIdList (query) {
+		return this.Scheme.find(query).lean().exec()
 	}
 }

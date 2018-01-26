@@ -24,6 +24,16 @@ import Teacher from '../models/Teacher.Model'
  */
 import User from './../models/User.Model'
 /**
+ * Book.Controller Module
+ * @const
+ */
+import BookController from '../controllers/Book.Controller'
+/**
+ * Chapter.Controller Module
+ * @const
+ */
+import ChapterController from '../controllers/Chapter.Controller'
+/**
  * JWT Config Object
  * @const
  */
@@ -53,12 +63,13 @@ export default class AuthController {
 	 * @return {json} status and return object.
 	 * @method signup
 	 * @todo Refactor this method breaking him in 2. One for student signup and another for teacher signup.
-	 * @todo Write comments
 	 */
 	signup (req, res) {
 		let data = req.body
+		// 1. Encrypt password to be saved
 		data.password = HashPassword.encrypt(data.password)
 
+		// 2. Save user and get its promise
 		let model = {}
 		if (req.params.type === 'student') model = new Student(data).persist()
 		else if (req.params.type === 'teacher') model = new Teacher(data).persist()
@@ -69,6 +80,7 @@ export default class AuthController {
 					delete user['password']
 					let token = this._generateToken(user)
 					res.set('authorization', `${token.type_token} ${token.acess_token}`)
+					// 3. Send user without password and with token in response
 					res.status(201).json(user).end()
 				} else throw new Error('user_not_saved')
 			})
@@ -94,15 +106,16 @@ export default class AuthController {
 	 * @param {object} res - Express response object.
 	 * @return {json} status and return object.
 	 * @method login
-	 * @todo Write comments
 	*/
 	login (req, res) {
-		let data = {
+		const data = {
 			login: req.body.login
 		}
 
-		new User(data)
-			.getByField()
+		let userWithBooks = null
+
+		// 1. Get user from login
+		new User(data).getByField()
 			.then(user => {
 				if (user.length !== 0) {
 					user = user[0]
@@ -110,10 +123,42 @@ export default class AuthController {
 						delete user['password']
 						let token = this._generateToken(user)
 						res.set('Authorization', `${token.type_token} ${token.acess_token}`)
-						res.status(200).json(user)
+						userWithBooks = user
+						return new BookController().getStudentBooks(user.books)
 					} else throw new Error('invalid_login_password')
 				// User not found
 				} else throw new Error('invalid_login_password')
+			})
+			// 2. Get student books
+			.then(books => {
+				let chapters = []
+				books.forEach(book => {
+					book.chapters.forEach(chapter => {
+						chapters.push(chapter)
+					})
+				})
+				userWithBooks.books = books
+				if (chapters.length === 0) return chapters
+				else return new ChapterController().getBooksChapters(chapters)
+			})
+			// 3. Get student chapters
+			.then(chapters => {
+				if (chapters.length !== 0) {
+					userWithBooks.books.map(book => {
+						book.chapters = []
+						chapters = chapters.filter(chapter => {
+							if (chapter._book.toString() === book._id.toString()) {
+								let chapterWithoutBookId = Object.assign({}, chapter)
+								delete chapterWithoutBookId['_book']
+								book.chapters.push(chapterWithoutBookId)
+							}
+							return chapter._book.toString() !== book._id.toString()
+						})
+						return book
+					})
+				}
+				// 4. Return user with books and inside chapters
+				res.status(200).json(userWithBooks)
 			})
 			.catch(err => {
 				console.error(err)

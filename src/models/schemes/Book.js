@@ -5,50 +5,56 @@ import mongoose from 'mongoose'
  */
 
 const studentRestriction = {
-  type: mongoose.Schema.Types.ObjectId,
-  ref: 'Student',
-  required: true,
-};
+	type: mongoose.Schema.Types.ObjectId,
+	ref: 'Student',
+	required: true
+}
 
 const titleRestriction = {
-  type: String,
-  required: [true, 'no title given'],
-  minlength: [1, 'title is too short'],
-  max: [40, 'title is too long'],
-};
+	type: String,
+	required: [true, 'no title given'],
+	minlength: [1, 'title is too short'],
+	max: [40, 'title is too long']
+}
 
 const summaryRestriction = {
-  type: String,
-  minlength: [30, 'summary is too short'],
-  max: [255, 'summary is too long'],
-};
+	type: String,
+	minlength: [30, 'summary is too short'],
+	max: [255, 'summary is too long']
+}
 
 const tagsRestriction = [{
-  type: String,
-}];
+	type: String
+}]
 
 const activeRestriction = {
-  type: Boolean,
-  default: true,
-};
+	type: Boolean,
+	default: true
+}
 
 const chaptersRestriction = [{
-  type: mongoose.Schema.Types.ObjectId,
-  ref: 'Chapters',
-  required: true,
-}];
+	type: mongoose.Schema.Types.ObjectId,
+	ref: 'Chapters',
+	required: true
+}]
+
+const photoRestriction = {
+	type: String,
+	required: true
+}
 
 /**
  * Book Schema
  */
 
 const BookSchema = new mongoose.Schema({
-  _student: studentRestriction,
-  title: titleRestriction,
-  summary: summaryRestriction,
-  tags: tagsRestriction,
-  active: activeRestriction,
-  chapters: chaptersRestriction,
-});
+	_student: studentRestriction,
+	title: titleRestriction,
+	summary: summaryRestriction,
+	tags: tagsRestriction,
+	active: activeRestriction,
+	chapters: chaptersRestriction,
+	photo: photoRestriction
+})
 
-export default mongoose.model('Book', BookSchema);
+export default mongoose.model('Book', BookSchema)

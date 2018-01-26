@@ -22,7 +22,7 @@ import passport from 'passport'
  * Chapter Controller Module
  * @const
  */
-import Chapter from '../controllers/Chapter.Controller'
+import ChapterController from '../controllers/Chapter.Controller'
 /**
  * Protected Route Middleware
  * @const
@@ -41,7 +41,7 @@ let router = express.Router()
  * @type {object}
  * @const
  */
-let cp = new Chapter()
+let cp = new ChapterController()
 /**
  * GET /chapter/
  * Auth Required
@@ -63,8 +63,8 @@ router.get('/', protect, (req, res) => {
  * @function
  * @todo write comments
  */
-router.post('/', protect, (req, res) => {
-	cp.save(req, res)
+router.post('/:book_id', protect, (req, res) => {
+	cp.saveChapter(req, res)
 })
 /**
  * GET /chapter/:id
@@ -86,18 +86,19 @@ router.get('/:id', protect, (req, res) => {
  * @todo write comments
  */
 router.put('/:id', protect, (req, res) => {
+	req.body._id = req.params.id
 	cp.updateById(req, res)
 })
 /**
- * DELETE /chapter/:id
+ * DELETE /chapter/:bookId/:chapterId
  * Remove chapter by ID Endpoint
  * Auth Required
  * @name /chapter/:id
  * @function
  * @todo write comments
  */
-router.delete('/:id', protect, (req, res) => {
-	cp.removeById(req, res)
+router.delete('/:bookId/:chapterId', protect, (req, res) => {
+	cp.removeChapter(req, res)
 })
 
 export default router

@@ -46,12 +46,14 @@ export default class Database {
 	 * @todo Write comments
 	 */
 	_production () {
-		return mongoose.connect('mongodb://heroku_dq9b7270:qt9jrol5hbeqj6gc3chksbau6q@ds227555.mlab.com:27555/heroku_dq9b7270').then(() => {
-			console.log('[Prod] -> Database conected')
-			return true
-		}).catch((err) => {
-			console.error(err)
-		})
+		return mongoose.connect('mongodb://heroku_dq9b7270:qt9jrol5hbeqj6gc3chksbau6q@ds227555.mlab.com:27555/heroku_dq9b7270', config.options)
+			.then(() => {
+				console.log('[Prod] -> Database conected')
+				return true
+			})
+			.catch(err => {
+				console.error(err)
+			})
 	}
 	/**
 	 * _local Connection method.
@@ -64,14 +66,15 @@ export default class Database {
 	 * @private
 	 */
 	_local () {
-		const localURI = 'mongodb://' + config.dev.local.host + ':' +
-											config.dev.local.port + '/' + config.dev.local.database
+		const localURI = `mongodb://${config.dev.local.host}:${config.dev.local.port}/${config.dev.local.database}`
 
-		return mongoose.connect(localURI).then(() => {
-			console.log('[Dev] -> Database conected')
-			return true
-		}).catch((err) => {
-			console.error(err)
-		})
+		return mongoose.connect(localURI, config.options)
+			.then(() => {
+				console.log('[Dev] -> Database conected')
+				return true
+			})
+			.catch(err => {
+				console.error(err)
+			})
 	}
 }

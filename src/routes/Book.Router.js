@@ -86,6 +86,7 @@ router.get('/:id', protect, (req, res) => {
  * @todo write comments
  */
 router.put('/:id', protect, (req, res) => {
+	req.body._id = req.params.id
 	bk.updateById(req, res)
 })
 /**
@@ -97,7 +98,7 @@ router.put('/:id', protect, (req, res) => {
  * @todo write comments
  */
 router.delete('/:id', protect, (req, res) => {
-	bk.removeById(req, res)
+	bk.removeBook(req, res)
 })
 
 export default router
