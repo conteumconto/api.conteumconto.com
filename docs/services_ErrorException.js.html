@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: models/Chapter.Model.js | Conte Um Conto Docs</title>
+    <title>Source: services/ErrorException.js | Conte Um Conto Docs</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -47,29 +47,22 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @namespace Model
- * @property {module:ChapterModel} ChapterModel
+ * @namespace Services
+ * @property {module:ErrorException} ErrorException
  */
-/**
- * ChapterModel handle with Chapter Database Collection interactions.
- * @module ChapterModel
- * @extends module:BaseModel
- */
-'use strict'
-/**
- * Chapter Scheme Module
- * @const
-*/
-import Chapter from './schemes/Chapter'
-/**
- * BaseModel Module
- * @const
-*/
-import BaseModel from './Base.Model'
 
-export default class ChapterModel extends BaseModel {
-	constructor (data) {
-		super(Chapter, '_id', data)
+/**
+ * Extends Error Object with Status Code.
+ * @module ErrorException
+ */
+
+'use strict'
+
+export default class ErrorException extends Error {
+	constructor (msg, code) {
+		super(msg)
+		this.code = code
+		Error.captureStackTrace(this, ErrorException)
 	}
 }
 </code></pre>

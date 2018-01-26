@@ -1,7 +1,7 @@
 # [Conte Um Conto] Backend API
 * * *
 
-Veja a [Documetação](https://conteumconto.github.io/api.conteumconto.com/ "Docs")
+[Documentação](https://conteumconto.github.io/api.conteumconto.com/ "Docs") atualizada em 26/01/18.
 
 ## Informações Gerais
 es6 + oopjs + MVC Style Classes
@@ -49,17 +49,17 @@ git commit -m 'professor resource working'
 git push origin Professor_Resource
 
 
-# Abra um pull request explicando sua funcionalidade e espere outro dev dar merge pra versão estavel.
+# Abra um pull request explicando sua funcionalidade e espere outro dev dar merge pra versão estável.
 # Caso queria continuar desenvolvendo enquanto espera o pull request ser fechado crie outra branch.
 ```
 * * *
-### Processo de Construção(Build)
+### Processo de Construção (Build)
 
 Em breve ...
 * * *
-### Processo de Testes(Build)
+### Processo de Testes (Build)
 
-O ambiente de testes esta configurado com:
+O ambiente de testes está configurado com:
 + [Mocha](https://mochajs.org/):
   * framework js pra testes
 + [Chai](http://chaijs.com/):
