@@ -7,24 +7,23 @@ import User from './User'
  */
 
 const bookRestriction = [{
-  type: mongoose.Schema.Types.ObjectId,
-  ref: 'Book',
-}];
+	type: mongoose.Schema.Types.ObjectId,
+	ref: 'Book'
+}]
 
 const emailRestriction = {
-  type: String,
-  index: [{
-    // Unique + Sparse = If the email is not null, it has to be unique
-    unique: true,
-    sparse: true,
-  }],
-};
+	type: String,
+	index: [{
+		// Unique + Sparse = If the email is not null, it has to be unique
+		unique: true,
+		sparse: true
+	}]
+}
 
 // Inheritance of the person model
 const StudentSchema = new mongoose.Schema({
-  books: bookRestriction,
-  email: emailRestriction
-});
-
+	books: bookRestriction,
+	email: emailRestriction
+})
 
 export default User.discriminator('Student', StudentSchema)
