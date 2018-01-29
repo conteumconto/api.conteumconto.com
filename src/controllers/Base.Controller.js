@@ -108,8 +108,14 @@ export default class BaseController {
 			})
 			.catch(err => {
 				console.error(err)
-				if (err.message === 'object_not_updated') res.status(400).json(err.message).end()
-				else res.status(500).json(err.message).end()
+				let errorMsg
+				if (err.code === 11000) {
+					if (err.errmsg.match(/email_1/)) errorMsg = 'duplicate_email'
+					else if (err.errmsg.match(/login_1/)) errorMsg = 'duplicate_login'
+				} else errorMsg = err.message
+				if (errorMsg === 'object_not_updated' || errorMsg === 'duplicate_email' || errorMsg === 'duplicate_login') {
+					res.status(400).json(errorMsg).end()
+				} else res.status(500).json(errorMsg).end()
 			})
 	}
 	/**
